@@ -1,16 +1,68 @@
-# React + Vite
+# 🥩 Carnicería Online - Proyecto React JS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto fue desarrollado como parte del programa **Talento Tech** del curso de **React JS**. Su objetivo principal es modernizar una aplicación web existente, transformándola de un proyecto de Frontend JS simple a una aplicación robusta y dinámica utilizando la tecnología moderna de React.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Características del Proyecto
 
-## React Compiler
+Este sitio web simula una carnicería online, ofreciendo a los clientes una plataforma sencilla para visualizar productos, consultar ofertas y realizar pedidos mediante un carrito de compras.
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Sección | Descripción |
+| :--- | :--- |
+| **Productos y Ofertas** | Muestra el catálogo completo de cortes (Vacuno, Pollo, Cerdo). Los datos son consumidos dinámicamente desde una Mock API. |
+| **Carrito de Compras** | Permite a los clientes seleccionar y gestionar productos antes de formalizar el pedido, facilitando una experiencia de compra fluida. |
+| **Contacto** | Información de contacto y ubicación del negocio. |
+| **Reseñas** | Espacio para que los clientes dejen comentarios y valoraciones. |
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Modernización Tecnológica
+
+Este proyecto representa una **continuación y modernización** del proyecto original desarrollado en JavaScript. Modernizamos la página haciendo uso de tecnologías modernas y populares:
+
+| Aspecto | Proyecto Original (Frontend JS) | Proyecto Actual (React JS) |
+| :--- | :--- | :--- |
+| **Tecnologías Base** | HTML, CSS, JavaScript (Vanilla) | **React + Vite**, JavaScript (Moderno) |
+| **Gestión de Datos** | Datos estáticos (arrays locales) | Datos dinámicos obtenidos mediante `fetch` desde una **Mock API** |
+| **Arquitectura** | Funciones y manipulación directa del DOM | Uso de **Componentes Reutilizables** y manejo de estado a través de *Hooks* (`useState`, `useEffect`). |
+| **Herramientas** | Entorno básico | **Vite** para un desarrollo rápido y optimizado. |
+
+---
+
+## 🛠️ Instalación y Ejecución
+
+Para levantar el proyecto de forma local, sigue estos pasos:
+
+### Prerrequisitos
+
+* Tener instalado **Node.js** (versión recomendada 18+).
+
+### Pasos
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://www.youtube.com/watch?v=dnxdIzF8p3k](https://www.youtube.com/watch?v=dnxdIzF8p3k)
+    cd [nombre-de-tu-carpeta-de-proyecto]
+    ```
+
+2.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
+
+3.  **Configurar la API:**
+    * Verifica que la URL de tu Mock API en el archivo `Productos.jsx` sea correcta y que los datos estén cargados (con IDs únicos).
+
+4.  **Iniciar el proyecto:**
+    ```bash
+    npm run dev
+    ```
+
+El proyecto se abrirá automáticamente en tu navegador en el puerto local (generalmente `http://localhost:5173`).
+
+---
+
+## 👥 Desarrollador
+
+* **[Tu Nombre Completo]** - *Estudiante de Talento Tech - React JS*
