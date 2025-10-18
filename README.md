@@ -42,8 +42,8 @@ Para levantar el proyecto de forma local, sigue estos pasos:
 
 1.  **Clonar el repositorio:**
     ```bash
-    git clone [https://www.youtube.com/watch?v=dnxdIzF8p3k](https://www.youtube.com/watch?v=dnxdIzF8p3k)
-    cd [nombre-de-tu-carpeta-de-proyecto]
+    git clone https://github.com/jpablo903/CarniceriaMadarey-React.git
+    cd CarniceriaMadarey
     ```
 
 2.  **Instalar dependencias:**
@@ -65,4 +65,4 @@ El proyecto se abrirá automáticamente en tu navegador en el puerto local (gene
 
 ## 👥 Desarrollador
 
-* **[Tu Nombre Completo]** - *Estudiante de Talento Tech - React JS*
+* **Juan Pablo Rajoy** - *Estudiante de Talento Tech - React JS*
