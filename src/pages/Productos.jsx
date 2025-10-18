@@ -6,7 +6,7 @@ const CATEGORIAS_BASE = [
     { id: 'vacuno', titulo: 'Cortes Vacunos', items: [] },
     { id: 'pollo', titulo: 'Cortes de Pollo', items: [] },
     { id: 'cerdo', titulo: 'Cortes de Cerdo', items: [] },
-    { id: 'especiales', titulo: 'Cortes Especiales', items: [] },
+    // { id: 'especiales', titulo: 'Cortes Especiales', items: [] },
 ];
 
 

@@ -48,7 +48,8 @@ body {
 
 .brand-title {
     color: #f2f2f2; 
-    font-size: 1.2rem;
+    font-family: 'NewNewsreade', serif;
+    font-size: 2rem;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); 
@@ -57,7 +58,8 @@ body {
 
 .premium-text {
     color: #D4AF37; 
-    font-size: 1.0rem; 
+    font-family: 'Birthstone', sans-serif; 
+    font-size: 2.2rem; 
     font-weight: 900;
     font-style: italic;
     /*text-shadow: 0 0 8px #D4AF37; */

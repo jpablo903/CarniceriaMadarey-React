@@ -8,6 +8,7 @@ import Ofertas from './pages/Ofertas'
 import Resenias from './pages/Resenia'
 import Contacto from './pages/Contacto'
 import Carrito from './pages/Carrito'
+import Footer from './pages/Footer'
 
 function App() {
     const [carrito, setCarrito] = useState([]);
@@ -60,6 +61,7 @@ function App() {
                     }
                 />
             </Routes>
+            <Footer />
         </div>
     )
 }
