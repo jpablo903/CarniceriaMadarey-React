@@ -4,14 +4,13 @@ import logoImage from '../assets/logoCarniceriaMadarey.png';
 import { useAppContext } from "../context/AppContext";
 
 function NavBar() { 
+    
     const [menuOpen, setMenuOpen] = useState(false);
 
     const location = useLocation(); 
 
-    // 🎣 Obtener datos del contexto
     const { carrito, isAuthenticated, usuario, cerrarSesion } = useAppContext();
     
-    // Calcular el contador de ítems
     const itemCount = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
     const toggleMenu = () => {

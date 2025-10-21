@@ -4,9 +4,9 @@ import React, { createContext, useContext, useState } from "react";
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
+
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [usuario, setUsuario] = useState({ nombre: "", email: "" });
-
     const [carrito, setCarrito] = useState([]);
 
     const agregarAlCarrito = (producto) => {

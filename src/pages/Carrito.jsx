@@ -8,7 +8,6 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Validación básica
         if (nombre && email) {
             onLoginSuccess(nombre, email);
         } else {
@@ -17,11 +16,10 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
     };
 
     return (
-        // Se sugiere añadir estilos en App.css para 'login-modal-overlay' y 'login-form-container'
         <div className="login-modal-overlay">
             <div className="login-form-container">
                 <button className="close-btn" onClick={onClose}>&times;</button>
-                <h3>Iniciar Sesión para Pagar</h3>
+                <h3>Iniciar Sesión</h3>
                 <form onSubmit={handleSubmit}>
                     <label>
                         Nombre:
