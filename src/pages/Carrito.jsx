@@ -163,7 +163,7 @@ function Carrito() {
                     className="btn-finalizar-compra" 
                     onClick={handleFinalizarCompra} 
                 >
-                    {isAuthenticated ? 'Finalizar Compra' : 'Iniciar Sesión para Pagar'}
+                    {isAuthenticated ? 'Finalizar Compra' : 'Iniciar Sesión'}
                 </button>
                 {
                     !isAuthenticated && (
