@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logoImage from '../assets/logoCarniceriaMadarey.png'; 
+import { useAppContext } from "../context/AppContext";
 
-function NavBar({ itemCount}) { 
+function NavBar() { 
     const [menuOpen, setMenuOpen] = useState(false);
 
     const location = useLocation(); 
+
+    // 🎣 Obtener datos del contexto
+    const { carrito, isAuthenticated, usuario, cerrarSesion } = useAppContext();
+    
+    // Calcular el contador de ítems
+    const itemCount = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -58,6 +65,17 @@ function NavBar({ itemCount}) {
                     </Link>
                 </li>
             </ul>
+
+            {isAuthenticated && (
+                <div className="nav-user-profile-wrapper user-wrapper-desktop">
+                    <div className="user-profile-info"> 
+                        <span className="user-name">Hola, {usuario.nombre}</span>
+                        <button onClick={() => { cerrarSesion(); toggleMenu(); }} className="btn-logout" title="Cerrar sesión">
+                            Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+            )}
         </nav>
     )
 }

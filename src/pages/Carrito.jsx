@@ -1,7 +1,71 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../context/AppContext';
 
-function Carrito({ carrito, modificarCantidad, eliminarDelCarrito }) {
+const LoginForm = ({ onLoginSuccess, onClose }) => {
+    const [nombre, setNombre] = useState('');
+    const [email, setEmail] = useState('');
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Validación básica
+        if (nombre && email) {
+            onLoginSuccess(nombre, email);
+        } else {
+            alert('Por favor, ingresa tu nombre y correo.');
+        }
+    };
+
+    return (
+        // Se sugiere añadir estilos en App.css para 'login-modal-overlay' y 'login-form-container'
+        <div className="login-modal-overlay">
+            <div className="login-form-container">
+                <button className="close-btn" onClick={onClose}>&times;</button>
+                <h3>Iniciar Sesión para Pagar</h3>
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Nombre:
+                        <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+                    </label>
+                    <label>
+                        Correo Electrónico:
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </label>
+                    <button type="submit" className="btn-login-submit">Ingresar</button>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+function Carrito() {
+
+    const { 
+        carrito, 
+        modificarCantidad, 
+        eliminarDelCarrito, 
+        isAuthenticated,
+        usuario, 
+        iniciarSesion,
+        vaciarCarrito
+    } = useAppContext();
+    
+    const [mostrarLogin, setMostrarLogin] = useState(false);
+
+    const handleFinalizarCompra = () => {
+        if (!isAuthenticated) {
+            setMostrarLogin(true);
+        } else {
+            alert(`¡Compra finalizada para ${usuario.nombre}! Gracias.`);
+            vaciarCarrito(); 
+        }
+    };
+    
+    const handleLoginSuccess = (nombre, email) => {
+        iniciarSesion(nombre, email);
+        setMostrarLogin(false);
+        alert(`¡Bienvenido ${nombre}! Ahora puedes completar tu pedido.`);
+    };
     
     if (carrito.length === 0) {
         return (
@@ -97,10 +161,25 @@ function Carrito({ carrito, modificarCantidad, eliminarDelCarrito }) {
                         <p className="resumen-total">Total a Pagar: <span>{formatCurrency(totalPagar)}</span></p>
                     </div>
 
-                    <button className="btn-finalizar-compra" onClick={() => alert('¡Listo para pagar!')}>
-                        Finalizar Compra
-                    </button>
+                    <button 
+                    className="btn-finalizar-compra" 
+                    onClick={handleFinalizarCompra} 
+                >
+                    {isAuthenticated ? 'Finalizar Compra' : 'Iniciar Sesión para Pagar'}
+                </button>
+                {
+                    !isAuthenticated && (
+                        <p className="login-checkout-info">Iniciar sesión para completar la compra.</p>
+                    )
+                }
                 </section>
+
+                {mostrarLogin && (
+                    <LoginForm 
+                        onLoginSuccess={handleLoginSuccess}
+                        onClose={() => setMostrarLogin(false)}
+                    />
+                )}
             </div>
         </main>
     );

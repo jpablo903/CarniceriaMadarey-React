@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NotificacionCarrito from './NotificacionCarrito';
+import { useAppContext } from '../context/AppContext';
 
 const URL_PRODUCTOS_API = 'https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos'; 
 
@@ -38,7 +39,10 @@ const ProductoCard = ({ titulo, items, handleAddToCart }) => {
 };
 
 
-function Productos({ agregarAlCarrito }) {
+function Productos() {
+
+    const { agregarAlCarrito } = useAppContext();
+
     const [productosAgrupados, setProductosAgrupados] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
