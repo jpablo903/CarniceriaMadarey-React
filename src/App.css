@@ -11,7 +11,7 @@ body {
 }
 
 /* ================================================= */
-/* ESTILOS BASE Y ESCRITORIO (Mayor a 860px)        */
+/* ESTILOS BASE Y ESCRITORIO        */
 /* ================================================= */
 
 .navbar-tech {
@@ -22,11 +22,9 @@ body {
     align-items: center; 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
     position: relative; 
-    /* CLAVE: Permite que los elementos pasen a la línea de abajo (para el perfil) */
     flex-wrap: wrap; 
 }
 
-/* Logo y Marca se mantienen en la primera línea */
 .navbar-logo, .navbar-brand-center {
     flex: 0 0 auto; 
 }
@@ -213,7 +211,6 @@ body {
     }
 }
 
-
 /* ================================================= */
 /* MEDIA QUERY: MÓVIL (860px)                        */
 /* ================================================= */
@@ -365,7 +362,6 @@ body {
     border: 0;
 }
 
-
 /* ================================================= */
 /* 5. OTROS ESTILOS GLOBALES  */
 /* ================================================= */
@@ -464,41 +460,14 @@ h3 {
     position: relative;
 }
 
-/* Estilo del botón circular de agregar al carrito
-.btn-agregar-carrito-producto {
-    background: #d32f2f;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1em;
-    margin-left: 8px;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
-    vertical-align: middle;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    padding: 0;
-} */
-
-/*
-.btn-agregar-carrito-producto:hover,
-.btn-agregar-carrito-producto:focus {
-    background: #b71c1c;
-    transform: scale(1.08);
-    outline: none;
-}*/
 
 
 /* Estilos para la Notificación de Carrito */
 .notificacion-carrito {
-    position: fixed; /* Fijo en la pantalla */
-    bottom: 20px; /* Separado del borde inferior */
-    right: 20px; /* Separado del borde derecho */
-    background-color: #4CAF50; /* Fondo verde para éxito */
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    background-color: #4CAF50; 
     color: white;
     padding: 15px 25px;
     border-radius: 8px;
@@ -798,63 +767,53 @@ h3 {
 
 
 /*              PAGINA EN CONTRUCCION                  */
-/* Estilos para centrar el contenido de las páginas 'en construcción' */
+
 .pagina-en-construccion {
-    /* 1. Ocupar todo el espacio disponible en la pantalla */
-    /* min-height: calc(100vh - 80px); Ajusta el alto de la vista menos el alto del navbar (ej. 80px) */
     display: flex;
-    flex-direction: column; /* Apila el H1 y la imagen verticalmente */
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
     
-    /* 2. Centrado Horizontal y Vertical */
-    justify-content: center; /* Centra el contenido verticalmente */
-    align-items: center;     /* Centra el contenido horizontalmente */
-    
-    /* 3. Estilos de texto */
     text-align: center;
     padding: 20px;
-    background-color: #3e3e3e; /* Fondo sutil para la página */
+    background-color: #3e3e3e; 
 }
 
-/* Estilos para el Título H1 */
 .pagina-en-construccion h1 {
     color: #d5d5d5;
     margin-bottom: 20px;
     font-size: 2.5rem;
 }
 
-/* Estilos para la Imagen de Construcción */
 .imagen-construccion {
-    max-width: 50%; /* Asegura que la imagen sea responsiva y no exceda el ancho */
+    max-width: 50%; 
     height: auto;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Ajuste opcional para pantallas muy pequeñas */
 @media (max-width: 600px) {
     .imagen-construccion {
         max-width: 95%;
     }
 }
 
-
-/* src/App.css o donde tengas tus estilos */
-
-/* 1. Capa Oscura de Fondo (Overlay) */
+/* ================================================= */
+/* MODAL LOGIN - INICIO DE SESSION  */
+/* ================================================= */
 .login-modal-overlay {
-    position: fixed; /* Fija la capa sobre todo */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+    background-color: rgba(0, 0, 0, 0.7); 
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Asegura que esté por encima de todos los demás elementos */
+    z-index: 1000; 
 }
 
-/* 2. Contenedor del Formulario (La caja flotante) */
 .login-form-container {
     background-color: white;
     padding: 30px;
@@ -863,10 +822,9 @@ h3 {
     width: 90%;
     max-width: 400px;
     position: relative;
-    animation: fadeIn 0.3s ease-out; /* Animación simple */
+    animation: fadeIn 0.3s ease-out; 
 }
 
-/* 3. Botón de Cerrar */
 .login-form-container .close-btn {
     position: absolute;
     top: 10px;
@@ -878,7 +836,6 @@ h3 {
     color: #333;
 }
 
-/* 4. Estilos de Formulario dentro del modal */
 .login-form-container h3 {
     margin-top: 0;
     color: #4a4a4a;
@@ -897,13 +854,13 @@ h3 {
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+    box-sizing: border-box; 
 }
 
 .login-form-container .btn-login-submit {
     width: 100%;
     padding: 12px;
-    background-color: #D4AF37; /* Color dorado/amarillo principal */
+    background-color: #D4AF37; 
     color: white;
     border: none;
     border-radius: 4px;
