@@ -1,9 +1,3 @@
-// src/components/Footer.jsx
-
-import React from 'react';
-
-// Si los iconos están en la carpeta 'public/icon', 
-// la ruta de acceso pública es simplemente '/icon'.
 const basePath = '/icon'; 
 
 const Footer = () => {

@@ -65,7 +65,7 @@ function Carrito() {
         alert(`¡Bienvenido ${nombre}! Ahora puedes completar tu pedido.`);
     };
     
-    if (carrito.length === 0) {
+    if (!carrito || carrito.length === 0) {
         return (
             <main className="carrito-page">
                 <h3 className="titulo-carrito">Tu Carrito de Compras</h3>

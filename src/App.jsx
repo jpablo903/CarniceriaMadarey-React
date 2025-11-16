@@ -8,6 +8,7 @@ import Resenias from './pages/Resenia'
 import Contacto from './pages/Contacto'
 import Carrito from './pages/Carrito'
 import Footer from './pages/Footer'
+import AdminPanel from './pages/AdminPanel'
 
 function App() {
     
@@ -21,6 +22,7 @@ function App() {
                 <Route path='/Resenias' element={<Resenias/>}/>
                 <Route path='/Contacto' element={<Contacto/>}/>
                 <Route path='/Carrito' element={<Carrito/>}/>
+                <Route path="/admin" element={<AdminPanel />} />
             </Routes>
             <Footer />
         </div>
