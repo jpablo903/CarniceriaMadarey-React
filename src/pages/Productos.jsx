@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import NotificacionCarrito from './NotificacionCarrito';
 import { useAppContext } from '../context/AppContext';
+import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const URL_PRODUCTOS_API = 'https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos'; 
+const URL_PRODUCTOS_API = 'https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos';
 
 const CATEGORIAS_BASE = [
     { id: 'vacuno', titulo: 'Cortes Vacunos', items: [] },
@@ -17,7 +19,7 @@ const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProduct
             style: 'currency',
             currency: 'ARS'
         }).format(precio);
-        
+
         return `${precioFormateado} / ${unidad}`;
     };
 
@@ -30,8 +32,8 @@ const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProduct
                         <div className="producto-imagen-container-compact">
                             {item.imagen ? (
                                 <>
-                                    <img 
-                                        src={item.imagen} 
+                                    <img
+                                        src={item.imagen}
                                         alt={item.nombre}
                                         className="producto-imagen-compact"
                                         onError={(e) => {
@@ -43,7 +45,7 @@ const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProduct
                                             }
                                         }}
                                     />
-                                    <div className="producto-sin-imagen-compact" style={{display: 'none'}}>
+                                    <div className="producto-sin-imagen-compact" style={{ display: 'none' }}>
                                         <i className="fas fa-image"></i>
                                     </div>
                                 </>
@@ -53,17 +55,17 @@ const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProduct
                                 </div>
                             )}
                         </div>
-                        
+
                         <div className="producto-info-compact">
                             <h3 className="producto-nombre-compact">{item.nombre}</h3>
                             <p className="producto-precio-compact">
                                 {formatPrecio(item.precio, item.unidad || 'kg')}
                             </p>
                         </div>
-                        
+
                         <div className="producto-actions-compact">
                             {!esAdmin ? (
-                                <button 
+                                <button
                                     className="btn-agregar-carrito-compact"
                                     onClick={() => handleAddToCart(item)}
                                     title="Agregar al carrito"
@@ -72,7 +74,7 @@ const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProduct
                                     Agregar
                                 </button>
                             ) : (
-                                <button 
+                                <button
                                     className="btn-editar-producto-compact"
                                     onClick={() => onEditarProducto(item)}
                                     title="Editar producto"
@@ -90,16 +92,17 @@ const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProduct
 };
 
 function Productos() {
-    const { agregarAlCarrito, esAdmin } = useAppContext();
+    const { agregarAlCarrito } = useAppContext();
+    const { esAdmin } = useAuthContext();
     const [productosAgrupados, setProductosAgrupados] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
-    const [notificacionMensaje, setNotificacionMensaje] = useState(null); 
-    const DURACION_NOTIFICACION = 2500; 
+    const [notificacionMensaje, setNotificacionMensaje] = useState(null);
+    const DURACION_NOTIFICACION = 2500;
     const navigate = useNavigate();
-    
+
     const handleAddToCart = (item) => {
-        agregarAlCarrito(item); 
+        agregarAlCarrito(item);
         setNotificacionMensaje(`${item.nombre} agregado al carrito! ✅`);
         setTimeout(() => {
             setNotificacionMensaje(null);
@@ -120,7 +123,7 @@ function Productos() {
                     throw new Error(`Error de red: ${response.status} ${response.statusText}`);
                 }
                 const productosData = await response.json();
-                
+
                 const nuevaEstructura = CATEGORIAS_BASE.map(categoriaBase => {
                     return {
                         ...categoriaBase,
@@ -129,19 +132,19 @@ function Productos() {
                         )
                     };
                 });
-                
+
                 setProductosAgrupados(nuevaEstructura);
                 setError(null);
             } catch (err) {
                 setError(`No se pudieron cargar los productos: ${err.message}.`);
-                setProductosAgrupados(CATEGORIAS_BASE); 
+                setProductosAgrupados(CATEGORIAS_BASE);
             } finally {
                 setCargando(false);
             }
         };
 
         fetchDatosYAgrupar();
-    }, []); 
+    }, []);
 
     if (cargando) {
         return (
@@ -164,20 +167,20 @@ function Productos() {
     return (
         <main className="productos-page-horizontal">
             <h1 className="titulo-principal">Productos</h1>
-            
+
             <div className="secciones-container">
-                {productosAgrupados.map(categoria => ( 
-                    <ProductoCard 
-                        key={categoria.id} 
-                        titulo={categoria.titulo} 
-                        items={categoria.items} 
+                {productosAgrupados.map(categoria => (
+                    <ProductoCard
+                        key={categoria.id}
+                        titulo={categoria.titulo}
+                        items={categoria.items}
                         handleAddToCart={handleAddToCart}
                         esAdmin={esAdmin}
                         onEditarProducto={handleEditarProducto}
                     />
                 ))}
             </div>
-            
+
             <NotificacionCarrito mensaje={notificacionMensaje} />
         </main>
     );

@@ -1,11 +1,12 @@
-// AdminPanel.jsx
 import React, { useState, useEffect } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useProductContext } from '../context/ProductContext';
+import { useAuthContext } from '../context/AuthContext';
 
 const URL_PRODUCTOS_API = 'https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos';
 
 function AdminPanel() {
-    const { esAdmin, agregarProducto, editarProducto, eliminarProducto } = useAppContext();
+    const { agregarProducto, editarProducto, eliminarProducto } = useProductContext();
+    const { esAdmin } = useAuthContext();
     const [productos, setProductos] = useState([]);
     const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [busqueda, setBusqueda] = useState('');
@@ -135,7 +136,7 @@ function AdminPanel() {
     return (
         <main className="admin-page">
             <h3>Panel de Administración</h3>
-            
+
             <div className="admin-controls">
                 <div className="search-container">
                     <div className="search-input-wrapper">
@@ -148,7 +149,7 @@ function AdminPanel() {
                             className="search-input"
                         />
                         {busqueda && (
-                            <button 
+                            <button
                                 onClick={limpiarBusqueda}
                                 className="clear-search-btn"
                                 title="Limpiar búsqueda"
@@ -161,8 +162,8 @@ function AdminPanel() {
                         {productosFiltrados.length} de {productos.length} productos
                     </span>
                 </div>
-                
-                <button 
+
+                <button
                     className="btn-agregar-producto"
                     onClick={() => setMostrarFormulario(true)}
                 >
@@ -179,19 +180,19 @@ function AdminPanel() {
                 }}>
                     <div className="admin-form-container">
                         <h4>{productoEditando ? 'Editar Producto' : 'Nuevo Producto'}</h4>
-                        
+
                         <form onSubmit={handleSubmit}>
                             <label>
                                 Nombre:
                                 <input
                                     type="text"
                                     value={formData.nombre}
-                                    onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                                    onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
                                     placeholder="Ej: Bife de Chorizo"
                                     required
                                 />
                             </label>
-                            
+
                             <label>
                                 Precio:
                                 <input
@@ -199,17 +200,17 @@ function AdminPanel() {
                                     step="0.01"
                                     min="0"
                                     value={formData.precio}
-                                    onChange={(e) => setFormData({...formData, precio: parseFloat(e.target.value) || 0})}
+                                    onChange={(e) => setFormData({ ...formData, precio: parseFloat(e.target.value) || 0 })}
                                     placeholder="Ej: 5200.00"
                                     required
                                 />
                             </label>
-                            
+
                             <label>
                                 Unidad:
                                 <select
                                     value={formData.unidad}
-                                    onChange={(e) => setFormData({...formData, unidad: e.target.value})}
+                                    onChange={(e) => setFormData({ ...formData, unidad: e.target.value })}
                                     required
                                 >
                                     <option value="kg">Kilogramo (kg)</option>
@@ -218,22 +219,22 @@ function AdminPanel() {
                                     <option value="docena">Docena</option>
                                 </select>
                             </label>
-                            
+
                             <label>
                                 Imagen (URL):
                                 <input
                                     type="url"
                                     value={formData.imagen}
-                                    onChange={(e) => setFormData({...formData, imagen: e.target.value})}
+                                    onChange={(e) => setFormData({ ...formData, imagen: e.target.value })}
                                     placeholder="https://ejemplo.com/imagen.jpg"
                                 />
                             </label>
-                            
+
                             <label>
                                 Categoría:
                                 <select
                                     value={formData.idCategoria}
-                                    onChange={(e) => setFormData({...formData, idCategoria: e.target.value})}
+                                    onChange={(e) => setFormData({ ...formData, idCategoria: e.target.value })}
                                     required
                                 >
                                     <option value="vacuno">Cortes Vacunos</option>
@@ -241,14 +242,14 @@ function AdminPanel() {
                                     <option value="cerdo">Cortes de Cerdo</option>
                                 </select>
                             </label>
-                            
+
                             {/* Vista previa de la imagen */}
                             {formData.imagen && (
                                 <div className="image-preview">
                                     <p>Vista previa:</p>
-                                    <img 
-                                        src={formData.imagen} 
-                                        alt="Vista previa" 
+                                    <img
+                                        src={formData.imagen}
+                                        alt="Vista previa"
                                         className="preview-image"
                                         onError={(e) => {
                                             e.target.style.display = 'none';
@@ -256,7 +257,7 @@ function AdminPanel() {
                                     />
                                 </div>
                             )}
-                            
+
                             <div className="form-buttons">
                                 <button type="submit" className="btn-guardar">
                                     {productoEditando ? 'Actualizar' : 'Crear'}
@@ -276,8 +277,8 @@ function AdminPanel() {
                         <div key={producto.id} className="producto-admin-card">
                             <div className="producto-image">
                                 {producto.imagen ? (
-                                    <img 
-                                        src={producto.imagen} 
+                                    <img
+                                        src={producto.imagen}
                                         alt={producto.nombre}
                                         className="producto-img"
                                         onError={(e) => {
@@ -286,7 +287,7 @@ function AdminPanel() {
                                         }}
                                     />
                                 ) : null}
-                                <div className="no-image" style={{display: producto.imagen ? 'none' : 'block'}}>
+                                <div className="no-image" style={{ display: producto.imagen ? 'none' : 'block' }}>
                                     <i className="fas fa-image"></i>
                                     <span>Sin imagen</span>
                                 </div>
@@ -300,13 +301,13 @@ function AdminPanel() {
                                 <span className="categoria-badge">{producto.idCategoria.toUpperCase()}</span>
                             </div>
                             <div className="producto-actions">
-                                <button 
+                                <button
                                     className="btn-editar"
                                     onClick={() => handleEditar(producto)}
                                 >
                                     <i className="fas fa-edit"></i>
                                 </button>
-                                <button 
+                                <button
                                     className="btn-eliminar-admin"
                                     onClick={() => handleEliminar(producto.id)}
                                 >
@@ -321,7 +322,7 @@ function AdminPanel() {
                         <p>No se encontraron productos</p>
                         <p>Intenta con otros términos de búsqueda</p>
                         {busqueda && (
-                            <button 
+                            <button
                                 onClick={limpiarBusqueda}
                                 className="btn-limpiar-busqueda"
                             >

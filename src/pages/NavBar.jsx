@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logoImage from '../assets/logoCarniceriaMadarey.png';
 import { useAppContext } from "../context/AppContext";
+import { useAuthContext } from "../context/AuthContext";
 
 const LoginForm = ({ onLoginSuccess, onClose }) => {
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (nombre && email) {
@@ -42,9 +43,10 @@ function NavBar() {
     const [mostrarLogin, setMostrarLogin] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const location = useLocation();
-    const { carrito, isAuthenticated, usuario, cerrarSesion, iniciarSesion, esAdmin } = useAppContext();
-    const itemCount = carrito ? carrito.reduce((acc, item) => acc + item.cantidad, 0) : 0;
-     
+    const { carrito } = useAppContext();
+    const { isAuthenticated, usuario, cerrarSesion, iniciarSesion, esAdmin } = useAuthContext();
+    const itemCount = carrito ? carrito.length : 0;
+
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
@@ -130,15 +132,15 @@ function NavBar() {
                     <div className="nav-user-section">
                         {isAuthenticated ? (
                             <div className="user-menu-container">
-                                <button 
-                                    className="user-menu-toggle" 
+                                <button
+                                    className="user-menu-toggle"
                                     onClick={toggleUserMenu}
                                     title="Menú de usuario"
                                 >
                                     <i className="fas fa-user-circle"></i>
                                 </button>
-                                
-                               
+
+
                                 {userMenuOpen && (
                                     <div className="user-dropdown-menu">
                                         {/* Mostrar Panel Admin solo si es admin */}
@@ -182,7 +184,7 @@ function NavBar() {
 
             {/* Modal de Login */}
             {mostrarLogin && (
-                <LoginForm 
+                <LoginForm
                     onLoginSuccess={handleLoginSuccess}
                     onClose={() => setMostrarLogin(false)}
                 />

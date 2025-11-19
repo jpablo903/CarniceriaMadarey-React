@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
 const LoginForm = ({ onLoginSuccess, onClose }) => {
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (nombre && email) {
@@ -38,16 +38,16 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
 
 function Carrito() {
 
-    const { 
-        carrito, 
-        modificarCantidad, 
-        eliminarDelCarrito, 
+    const {
+        carrito,
+        modificarCantidad,
+        eliminarDelCarrito,
         isAuthenticated,
-        usuario, 
+        usuario,
         iniciarSesion,
         vaciarCarrito
     } = useAppContext();
-    
+
     const [mostrarLogin, setMostrarLogin] = useState(false);
 
     const handleFinalizarCompra = () => {
@@ -55,16 +55,16 @@ function Carrito() {
             setMostrarLogin(true);
         } else {
             alert(`¡Compra finalizada para ${usuario.nombre}! Gracias.`);
-            vaciarCarrito(); 
+            vaciarCarrito();
         }
     };
-    
+
     const handleLoginSuccess = (nombre, email) => {
         iniciarSesion(nombre, email);
         setMostrarLogin(false);
         alert(`¡Bienvenido ${nombre}! Ahora puedes completar tu pedido.`);
     };
-    
+
     if (!carrito || carrito.length === 0) {
         return (
             <main className="carrito-page">
@@ -83,7 +83,7 @@ function Carrito() {
     const subtotal = carrito.reduce((sum, item) => {
         return sum + (item.precio * item.cantidad);
     }, 0);
-    
+
     const envio = 1500;
     const totalPagar = subtotal + envio;
 
@@ -97,7 +97,7 @@ function Carrito() {
             <h3 className="titulo-carrito">Tu Carrito de Compras</h3>
 
             <div className="carrito-content-wrapper">
-                
+
                 <section className="carrito-items-container">
                     <div className="carrito-header">
                         <span className="carrito-col producto-col">Producto</span>
@@ -111,19 +111,19 @@ function Carrito() {
                         {carrito.map(item => (
                             <div key={item.id} className="carrito-item">
                                 <span className="carrito-col producto-col">{item.nombre}</span>
-                                
-                                <span className="carrito-col precio-col">{item.precioDisplay}</span> 
-                                
+
+                                <span className="carrito-col precio-col">{formatCurrency(item.precio)}</span>
+
                                 <span className="carrito-col cantidad-col">
                                     <div className="cantidad-controles">
-                                        <button 
+                                        <button
                                             className="btn-cantidad"
                                             onClick={() => modificarCantidad(item.id, item.cantidad - 1)}
                                         >
                                             -
                                         </button>
                                         <span className="cantidad-valor">{item.cantidad.toFixed(2)} {item.unidad}</span>
-                                        <button 
+                                        <button
                                             className="btn-cantidad"
                                             onClick={() => modificarCantidad(item.id, item.cantidad + 1)}
                                         >
@@ -131,14 +131,14 @@ function Carrito() {
                                         </button>
                                     </div>
                                 </span>
-                                
+
                                 <span className="carrito-col subtotal-col">
                                     {formatCurrency(item.precio * item.cantidad)}
                                 </span>
-                                
+
                                 <span className="carrito-col acciones-col">
-                                    <button 
-                                        className="btn-eliminar" 
+                                    <button
+                                        className="btn-eliminar"
                                         title="Eliminar ítem"
                                         onClick={() => eliminarDelCarrito(item.id)}
                                     >
@@ -159,21 +159,21 @@ function Carrito() {
                         <p className="resumen-total">Total a Pagar: <span>{formatCurrency(totalPagar)}</span></p>
                     </div>
 
-                    <button 
-                    className="btn-finalizar-compra" 
-                    onClick={handleFinalizarCompra} 
-                >
-                    {isAuthenticated ? 'Finalizar Compra' : 'Iniciar Sesión'}
-                </button>
-                {
-                    !isAuthenticated && (
-                        <p className="login-checkout-info">Iniciar sesión para completar la compra.</p>
-                    )
-                }
+                    <button
+                        className="btn-finalizar-compra"
+                        onClick={handleFinalizarCompra}
+                    >
+                        {isAuthenticated ? 'Finalizar Compra' : 'Iniciar Sesión'}
+                    </button>
+                    {
+                        !isAuthenticated && (
+                            <p className="login-checkout-info">Iniciar sesión para completar la compra.</p>
+                        )
+                    }
                 </section>
 
                 {mostrarLogin && (
-                    <LoginForm 
+                    <LoginForm
                         onLoginSuccess={handleLoginSuccess}
                         onClose={() => setMostrarLogin(false)}
                     />
