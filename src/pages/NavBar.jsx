@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import logoImage from '../assets/logoCarniceriaMadarey.png';
 import { useAppContext } from "../context/AppContext";
 import { useAuthContext } from "../context/AuthContext";
-
+import '../css/navbar.css';
+import '../css/login-modal.css';
 const LoginForm = ({ onLoginSuccess, onClose }) => {
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');

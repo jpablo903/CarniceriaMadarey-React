@@ -47,12 +47,7 @@ export function AuthProvider({ children }) {
         // Limpiar localStorage al cerrar sesión
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('usuario');
-        // Note: We don't clear cart here anymore as it is in AppContext, 
-        // but usually cart should be cleared on logout. 
-        // I will leave it as is for now and let the component handle it or user can decide.
-        // Actually, the original code cleared cart in AppContext. 
-        // Since AppContext still holds the cart, we might need a way to clear it.
-        // For now, I will just handle Auth logic here.
+
     };
 
     const value = {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import '../css/carrito.css'; import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
 const LoginForm = ({ onLoginSuccess, onClose }) => {

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import NotificacionCarrito from './NotificacionCarrito';
+import '../css/productos.css'; import NotificacionCarrito from './NotificacionCarrito';
 import { useAppContext } from '../context/AppContext';
 import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';

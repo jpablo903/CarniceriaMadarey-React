@@ -1,0 +1,42 @@
+/* ================================================= */
+/* ESTILOS DE FOOTER */
+/* ================================================= */
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #ffffff;
+    width: 100%;
+    margin-top: auto;
+}
+
+.footer-social-media {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.footer-social-media a {
+    transition: transform 0.3s ease;
+}
+
+.footer-social-media a:hover {
+    transform: scale(1.1);
+}
+
+.footer-info p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+.footer-desarrollador {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
