@@ -1,0 +1,93 @@
+.contacto-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.contacto-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #D4AF37;
+    font-size: 2.5rem;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 0.8rem;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #2d2d2d;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #e53935;
+}
+
+.form-group input:read-only {
+    background-color: #1f1f1f;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn-enviar {
+    background-color: #e53935;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.btn-enviar:hover {
+    background-color: #c62828;
+}
+
+.feedback-message {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    display: none;
+}
+
+.feedback-message.success {
+    display: block;
+    background-color: #2e7d32;
+    color: white;
+}
+
+.feedback-message.error {
+    display: block;
+    background-color: #c62828;
+    color: white;
+}

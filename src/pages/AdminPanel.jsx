@@ -11,7 +11,7 @@ function AdminPanel() {
     const [productos, setProductos] = useState([]);
     const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [busqueda, setBusqueda] = useState('');
-    const [filtroCategoria, setFiltroCategoria] = useState('todos'); // Nuevo estado para el filtro
+    const [filtroCategoria, setFiltroCategoria] = useState('todos');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [productoEditando, setProductoEditando] = useState(null);
     const [formData, setFormData] = useState({
@@ -22,12 +22,12 @@ function AdminPanel() {
         idCategoria: 'vacuno'
     });
 
-    // Opciones de categorías para el filtro
     const categorias = [
         { value: 'todos', label: 'Todas las categorías' },
         { value: 'vacuno', label: 'Cortes Vacunos' },
         { value: 'pollo', label: 'Cortes de Pollo' },
-        { value: 'cerdo', label: 'Cortes de Cerdo' }
+        { value: 'cerdo', label: 'Cortes de Cerdo' },
+        { value: 'ofertas', label: 'Ofertas' }
     ];
 
     useEffect(() => {
@@ -48,18 +48,15 @@ function AdminPanel() {
         cargarProductos();
     }, []);
 
-    // Efecto para filtrar productos cuando cambia la búsqueda o el filtro de categoría
     useEffect(() => {
         let filtrados = productos;
 
-        // Aplicar filtro por categoría
         if (filtroCategoria !== 'todos') {
             filtrados = filtrados.filter(producto =>
                 producto.idCategoria === filtroCategoria
             );
         }
 
-        // Aplicar filtro por búsqueda
         if (busqueda.trim() !== '') {
             filtrados = filtrados.filter(producto =>
                 producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
@@ -143,7 +140,6 @@ function AdminPanel() {
         setFiltroCategoria('todos');
     };
 
-    // Función para formatear el precio
     const formatPrecio = (precio) => {
         return new Intl.NumberFormat('es-AR', {
             style: 'currency',
@@ -231,7 +227,6 @@ function AdminPanel() {
                 </div>
             </div>
 
-            {/* El resto del código permanece igual */}
             {mostrarFormulario && (
                 <div className="admin-form-overlay" onClick={(e) => {
                     if (e.target.className === 'admin-form-overlay') {
@@ -241,7 +236,6 @@ function AdminPanel() {
                     <div className="admin-form-container">
                         <h4>{productoEditando ? 'Editar Producto' : 'Nuevo Producto'}</h4>
                         <form onSubmit={handleSubmit}>
-                            {/* Formulario permanece igual */}
                             <label>
                                 Nombre:
                                 <input
@@ -300,6 +294,7 @@ function AdminPanel() {
                                     <option value="vacuno">Cortes Vacunos</option>
                                     <option value="pollo">Cortes de Pollo</option>
                                     <option value="cerdo">Cortes de Cerdo</option>
+                                    <option value="ofertas">Ofertas</option>
                                 </select>
                             </label>
 

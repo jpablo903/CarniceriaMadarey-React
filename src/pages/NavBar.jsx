@@ -79,7 +79,6 @@ function NavBar() {
 
     return (
         <nav className="navbar-tech">
-            {/* Fila 1: Logo + Nombre de la carnicería */}
             <div className="navbar-top-row">
                 <div className="navbar-logo-title">
                     <Link to='/' className="logo-link">
@@ -92,7 +91,6 @@ function NavBar() {
                 </div>
             </div>
 
-            {/* Fila 2: Menú de navegación + Carrito + Login */}
             <div className="navbar-bottom-row">
                 <div className="navbar-menu-section">
                     <div className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
@@ -121,7 +119,6 @@ function NavBar() {
                 </div>
 
                 <div className="navbar-icons-section">
-                    {/* Carrito */}
                     <div className="nav-carrito-item">
                         <Link to='/Carrito' className={`btn-carrito ${getLinkClass('/Carrito')}`} title="Ir al carrito">
                             <i className="fas fa-shopping-cart"></i>
@@ -129,7 +126,6 @@ function NavBar() {
                         </Link>
                     </div>
 
-                    {/* Login/Logout */}
                     <div className="nav-user-section">
                         {isAuthenticated ? (
                             <div className="user-menu-container">
@@ -144,7 +140,6 @@ function NavBar() {
 
                                 {userMenuOpen && (
                                     <div className="user-dropdown-menu">
-                                        {/* Mostrar Panel Admin solo si es admin */}
                                         {esAdmin && (
                                             <div className="user-dropdown-item">
                                                 <Link to="/admin" className="btn-admin-dashboard" onClick={() => setUserMenuOpen(false)}>
@@ -174,7 +169,6 @@ function NavBar() {
                 </div>
             </div>
 
-            {/* Fila 3: Saludo del usuario (solo cuando está logueado) */}
             {isAuthenticated && (
                 <div className="navbar-user-row">
                     <div className="user-greeting">
@@ -183,7 +177,6 @@ function NavBar() {
                 </div>
             )}
 
-            {/* Modal de Login */}
             {mostrarLogin && (
                 <LoginForm
                     onLoginSuccess={handleLoginSuccess}
