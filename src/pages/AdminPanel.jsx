@@ -11,6 +11,7 @@ function AdminPanel() {
     const [productos, setProductos] = useState([]);
     const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [busqueda, setBusqueda] = useState('');
+    const [filtroCategoria, setFiltroCategoria] = useState('todos'); // Nuevo estado para el filtro
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [productoEditando, setProductoEditando] = useState(null);
     const [formData, setFormData] = useState({
@@ -20,6 +21,14 @@ function AdminPanel() {
         imagen: '',
         idCategoria: 'vacuno'
     });
+
+    // Opciones de categorías para el filtro
+    const categorias = [
+        { value: 'todos', label: 'Todas las categorías' },
+        { value: 'vacuno', label: 'Cortes Vacunos' },
+        { value: 'pollo', label: 'Cortes de Pollo' },
+        { value: 'cerdo', label: 'Cortes de Cerdo' }
+    ];
 
     useEffect(() => {
         const productoGuardado = sessionStorage.getItem('productoEditando');
@@ -39,17 +48,26 @@ function AdminPanel() {
         cargarProductos();
     }, []);
 
-    // Efecto para filtrar productos cuando cambia la búsqueda
+    // Efecto para filtrar productos cuando cambia la búsqueda o el filtro de categoría
     useEffect(() => {
-        if (busqueda.trim() === '') {
-            setProductosFiltrados(productos);
-        } else {
-            const filtrados = productos.filter(producto =>
+        let filtrados = productos;
+
+        // Aplicar filtro por categoría
+        if (filtroCategoria !== 'todos') {
+            filtrados = filtrados.filter(producto =>
+                producto.idCategoria === filtroCategoria
+            );
+        }
+
+        // Aplicar filtro por búsqueda
+        if (busqueda.trim() !== '') {
+            filtrados = filtrados.filter(producto =>
                 producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
             );
-            setProductosFiltrados(filtrados);
         }
-    }, [busqueda, productos]);
+
+        setProductosFiltrados(filtrados);
+    }, [busqueda, filtroCategoria, productos]);
 
     const cargarProductos = async () => {
         try {
@@ -112,8 +130,17 @@ function AdminPanel() {
         setBusqueda(e.target.value);
     };
 
+    const handleFiltroCategoriaChange = (e) => {
+        setFiltroCategoria(e.target.value);
+    };
+
     const limpiarBusqueda = () => {
         setBusqueda('');
+    };
+
+    const limpiarFiltros = () => {
+        setBusqueda('');
+        setFiltroCategoria('todos');
     };
 
     // Función para formatear el precio
@@ -139,40 +166,72 @@ function AdminPanel() {
             <h3>Panel de Administración</h3>
 
             <div className="admin-controls">
-                <div className="search-container">
-                    <div className="search-input-wrapper">
-                        <i className="fas fa-search search-icon"></i>
-                        <input
-                            type="text"
-                            placeholder="Buscar productos por nombre..."
-                            value={busqueda}
-                            onChange={handleBusquedaChange}
-                            className="search-input"
-                        />
-                        {busqueda && (
-                            <button
-                                onClick={limpiarBusqueda}
-                                className="clear-search-btn"
-                                title="Limpiar búsqueda"
-                            >
-                                <i className="fas fa-times"></i>
-                            </button>
-                        )}
+                <div className="filters-container">
+                    <div className="search-container">
+                        <div className="search-input-wrapper">
+                            <i className="fas fa-search search-icon"></i>
+                            <input
+                                type="text"
+                                placeholder="Buscar productos por nombre..."
+                                value={busqueda}
+                                onChange={handleBusquedaChange}
+                                className="search-input"
+                            />
+                            {busqueda && (
+                                <button
+                                    onClick={limpiarBusqueda}
+                                    className="clear-search-btn"
+                                    title="Limpiar búsqueda"
+                                >
+                                    <i className="fas fa-times"></i>
+                                </button>
+                            )}
+                        </div>
                     </div>
-                    <span className="search-results">
-                        {productosFiltrados.length} de {productos.length} productos
-                    </span>
+
+                    <div className="filter-category-container">
+                        <select
+                            value={filtroCategoria}
+                            onChange={handleFiltroCategoriaChange}
+                            className="filter-category-select"
+                        >
+                            {categorias.map(categoria => (
+                                <option key={categoria.value} value={categoria.value}>
+                                    {categoria.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {(busqueda || filtroCategoria !== 'todos') && (
+                        <button
+                            onClick={limpiarFiltros}
+                            className="clear-filters-btn"
+                            title="Limpiar todos los filtros"
+                        >
+                            <i className="fas fa-times"></i>
+                            Limpiar Filtros
+                        </button>
+                    )}
                 </div>
 
-                <button
-                    className="btn-agregar-producto"
-                    onClick={() => setMostrarFormulario(true)}
-                >
-                    <i className="fas fa-plus"></i>
-                    Agregar Producto
-                </button>
+                <div className="controls-info">
+                    <span className="search-results">
+                        {productosFiltrados.length} de {productos.length} productos
+                        {filtroCategoria !== 'todos' && ` en ${categorias.find(c => c.value === filtroCategoria)?.label}`}
+                    </span>
+
+                    <button
+                        className="btn-agregar-producto"
+                        onClick={() => setMostrarFormulario(true)}
+                    >
+                        <i className="fas fa-plus"></i>
+                        Agregar Producto
+                    </button>
+                </div>
             </div>
 
+            {/* El resto del código permanece igual */}
             {mostrarFormulario && (
                 <div className="admin-form-overlay" onClick={(e) => {
                     if (e.target.className === 'admin-form-overlay') {
@@ -181,8 +240,8 @@ function AdminPanel() {
                 }}>
                     <div className="admin-form-container">
                         <h4>{productoEditando ? 'Editar Producto' : 'Nuevo Producto'}</h4>
-
                         <form onSubmit={handleSubmit}>
+                            {/* Formulario permanece igual */}
                             <label>
                                 Nombre:
                                 <input
@@ -244,7 +303,6 @@ function AdminPanel() {
                                 </select>
                             </label>
 
-                            {/* Vista previa de la imagen */}
                             {formData.imagen && (
                                 <div className="image-preview">
                                     <p>Vista previa:</p>
@@ -322,12 +380,12 @@ function AdminPanel() {
                         <i className="fas fa-search"></i>
                         <p>No se encontraron productos</p>
                         <p>Intenta con otros términos de búsqueda</p>
-                        {busqueda && (
+                        {(busqueda || filtroCategoria !== 'todos') && (
                             <button
-                                onClick={limpiarBusqueda}
+                                onClick={limpiarFiltros}
                                 className="btn-limpiar-busqueda"
                             >
-                                Limpiar búsqueda
+                                Limpiar filtros
                             </button>
                         )}
                     </div>
