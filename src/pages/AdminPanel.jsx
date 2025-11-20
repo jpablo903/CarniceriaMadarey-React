@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../css/adminpanel.css';
 import { useProductContext } from '../context/ProductContext';
 import { useAuthContext } from '../context/AuthContext';
 

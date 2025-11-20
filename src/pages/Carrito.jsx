@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../css/carrito.css'; import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+import { useAuthContext } from '../context/AuthContext';
 
 const LoginForm = ({ onLoginSuccess, onClose }) => {
     const [nombre, setNombre] = useState('');
@@ -37,16 +38,14 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
 };
 
 function Carrito() {
-
     const {
         carrito,
         modificarCantidad,
         eliminarDelCarrito,
-        isAuthenticated,
-        usuario,
-        iniciarSesion,
         vaciarCarrito
     } = useAppContext();
+
+    const { isAuthenticated, usuario, iniciarSesion } = useAuthContext();
 
     const [mostrarLogin, setMostrarLogin] = useState(false);
 
