@@ -5,6 +5,8 @@ import { useAppContext } from "../context/AppContext";
 import { useAuthContext } from "../context/AuthContext";
 import '../css/navbar.css';
 import '../css/login-modal.css';
+import Swal from 'sweetalert2';
+
 const LoginForm = ({ onLoginSuccess, onClose }) => {
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
@@ -14,7 +16,12 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
         if (nombre && email) {
             onLoginSuccess(nombre, email);
         } else {
-            alert('Por favor, ingresa tu nombre y correo.');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor, ingresa tu nombre y correo.',
+                confirmButtonColor: '#d33'
+            });
         }
     };
 
@@ -74,7 +81,12 @@ function NavBar() {
     const handleLoginSuccess = (nombre, email) => {
         iniciarSesion(nombre, email);
         setMostrarLogin(false);
-        alert(`¡Bienvenido ${nombre}!`);
+        Swal.fire({
+            icon: 'success',
+            title: `¡Bienvenido ${nombre}!`,
+            showConfirmButton: false,
+            timer: 1500
+        });
     };
 
     return (

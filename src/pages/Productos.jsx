@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../css/productos.css';
-import NotificacionCarrito from './NotificacionCarrito';
 import { useAppContext } from '../context/AppContext';
 import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import ProductoCard from '../components/ProductoCard';
+import Swal from 'sweetalert2';
 
 const URL_PRODUCTOS_API = 'https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos';
 
@@ -20,16 +20,22 @@ function Productos() {
     const [productosAgrupados, setProductosAgrupados] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
-    const [notificacionMensaje, setNotificacionMensaje] = useState(null);
-    const DURACION_NOTIFICACION = 2500;
     const navigate = useNavigate();
 
     const handleAddToCart = (item) => {
         agregarAlCarrito(item);
-        setNotificacionMensaje(`${item.nombre} agregado al carrito! ✅`);
-        setTimeout(() => {
-            setNotificacionMensaje(null);
-        }, DURACION_NOTIFICACION);
+        Swal.fire({
+            icon: 'success',
+            title: 'Agregado',
+            text: `${item.nombre} se agregó al carrito`,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            background: '#fff',
+            color: '#333'
+        });
     };
 
     const handleEditarProducto = (producto) => {
@@ -103,8 +109,6 @@ function Productos() {
                     />
                 ))}
             </div>
-
-            <NotificacionCarrito mensaje={notificacionMensaje} />
         </main>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import '../css/resenias.css';
+import Swal from 'sweetalert2';
 
 const URL_RESENIAS_API = 'https://686c1b1414219674dcc741df.mockapi.io/api/resenia/resenias';
 
@@ -33,15 +34,30 @@ function Resenias() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isAuthenticated) {
-            alert('Debes iniciar sesión para dejar una reseña.');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Inicia sesión',
+                text: 'Debes iniciar sesión para dejar una reseña.',
+                confirmButtonColor: '#d33'
+            });
             return;
         }
         if (calificacion === 0) {
-            alert('Por favor, selecciona una calificación.');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Falta calificación',
+                text: 'Por favor, selecciona una calificación.',
+                confirmButtonColor: '#d33'
+            });
             return;
         }
         if (!nuevoComentario.trim()) {
-            alert('Por favor, escribe un comentario.');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Comentario vacío',
+                text: 'Por favor, escribe un comentario.',
+                confirmButtonColor: '#d33'
+            });
             return;
         }
 
@@ -67,13 +83,29 @@ function Resenias() {
                 setResenias([reseniaGuardada, ...resenias]);
                 setNuevoComentario('');
                 setCalificacion(0);
-                alert('¡Gracias por tu reseña!');
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Gracias!',
+                    text: 'Tu reseña ha sido publicada.',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
             } else {
-                alert('Hubo un error al enviar tu reseña. Inténtalo de nuevo.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un error al enviar tu reseña. Inténtalo de nuevo.',
+                    confirmButtonColor: '#d33'
+                });
             }
         } catch (error) {
             console.error('Error al enviar reseña:', error);
-            alert('Error de conexión.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor.',
+                confirmButtonColor: '#d33'
+            });
         } finally {
             setEnviando(false);
         }

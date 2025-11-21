@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import '../css/carrito.css'; import { Link } from 'react-router-dom';
+import '../css/carrito.css';
+import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { useAuthContext } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 
 const LoginForm = ({ onLoginSuccess, onClose }) => {
     const [nombre, setNombre] = useState('');
@@ -12,7 +14,12 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
         if (nombre && email) {
             onLoginSuccess(nombre, email);
         } else {
-            alert('Por favor, ingresa tu nombre y correo.');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor, ingresa tu nombre y correo.',
+                confirmButtonColor: '#d33'
+            });
         }
     };
 
@@ -53,7 +60,12 @@ function Carrito() {
         if (!isAuthenticated) {
             setMostrarLogin(true);
         } else {
-            alert(`¡Compra finalizada para ${usuario.nombre}! Gracias.`);
+            Swal.fire({
+                icon: 'success',
+                title: '¡Compra finalizada!',
+                text: `Gracias por tu compra, ${usuario.nombre}.`,
+                confirmButtonColor: '#D4AF37'
+            });
             vaciarCarrito();
         }
     };
@@ -61,7 +73,13 @@ function Carrito() {
     const handleLoginSuccess = (nombre, email) => {
         iniciarSesion(nombre, email);
         setMostrarLogin(false);
-        alert(`¡Bienvenido ${nombre}! Ahora puedes completar tu pedido.`);
+        Swal.fire({
+            icon: 'success',
+            title: `¡Bienvenido ${nombre}!`,
+            text: 'Ahora puedes completar tu pedido.',
+            showConfirmButton: false,
+            timer: 2000
+        });
     };
 
     if (!carrito || carrito.length === 0) {
