@@ -2,6 +2,8 @@ import React, { createContext, useContext } from "react";
 
 const ProductContext = createContext();
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useProductContext = () => {
     const context = useContext(ProductContext);
     if (!context) {
@@ -13,7 +15,7 @@ export const useProductContext = () => {
 export function ProductProvider({ children }) {
     const agregarProducto = async (nuevoProducto) => {
         try {
-            const response = await fetch('https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos', {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,7 +31,7 @@ export function ProductProvider({ children }) {
 
     const editarProducto = async (id, productoEditado) => {
         try {
-            const response = await fetch(`https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos/${id}`, {
+            const response = await fetch(`${API_URL}/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +47,7 @@ export function ProductProvider({ children }) {
 
     const eliminarProducto = async (id) => {
         try {
-            await fetch(`https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos/${id}`, {
+            await fetch(`${API_URL}/${id}`, {
                 method: 'DELETE'
             });
         } catch (error) {

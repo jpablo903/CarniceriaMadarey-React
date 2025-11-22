@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import ProductoCard from '../components/ProductoCard';
 import Swal from 'sweetalert2';
 
-const URL_PRODUCTOS_API = 'https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos';
+const URL_PRODUCTOS_API = import.meta.env.VITE_API_URL;
 
 const CATEGORIAS_BASE = [
     { id: 'vacuno', titulo: 'Cortes Vacunos', items: [] },

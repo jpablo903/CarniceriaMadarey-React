@@ -32,7 +32,7 @@ export function AuthProvider({ children }) {
     }, [usuario]);
 
     const esAdmin = React.useMemo(() => {
-        return isAuthenticated && usuario.nombre === "AdminMadarey" && usuario.email === 'admin@madarey.com';
+        return isAuthenticated && usuario.nombre === import.meta.env.VITE_ADMIN_NAME && usuario.email === import.meta.env.VITE_ADMIN_EMAIL;
     }, [isAuthenticated, usuario.nombre, usuario.email]);
 
     const iniciarSesion = (nombre, email) => {

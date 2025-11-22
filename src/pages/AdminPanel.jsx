@@ -3,7 +3,7 @@ import '../css/adminpanel.css';
 import { useProductContext } from '../context/ProductContext';
 import { useAuthContext } from '../context/AuthContext';
 
-const URL_PRODUCTOS_API = 'https://686c1b1414219674dcc741df.mockapi.io/api/resenia/productos';
+const URL_PRODUCTOS_API = import.meta.env.VITE_API_URL;
 
 function AdminPanel() {
     const { agregarProducto, editarProducto, eliminarProducto } = useProductContext();

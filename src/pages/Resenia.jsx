@@ -3,7 +3,7 @@ import { useAuthContext } from '../context/AuthContext';
 import '../css/resenias.css';
 import Swal from 'sweetalert2';
 
-const URL_RESENIAS_API = 'https://686c1b1414219674dcc741df.mockapi.io/api/resenia/resenias';
+const URL_RESENIAS_API = import.meta.env.VITE_API_URL_RESENIAS;
 
 function Resenias() {
     const { isAuthenticated, usuario } = useAuthContext();

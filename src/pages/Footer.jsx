@@ -1,52 +1,64 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import '../css/footer.css';
-
-const basePath = '/icon';
 
 const Footer = () => {
     return (
-        <footer>
-            <section className="footer-social-media">
-                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-                    <img
-                        src={`${basePath}/icons8-instagram-48.png`}
-                        alt="Instagram"
-                        width="48"
-                    />
-                </a>
-                <a href="https://x.com/" target="_blank" rel="noopener noreferrer">
-                    <img
-                        src={`${basePath}/icons8-x-48.png`}
-                        alt="X"
-                        width="48"
-                    />
-                </a>
-                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-                    <img
-                        src={`${basePath}/icons8-facebook-nuevo-48.png`}
-                        alt="Facebook"
-                        width="48"
-                    />
-                </a>
-                <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
-                    <img
-                        src={`${basePath}/icons8-whatsapp-48.png`}
-                        alt="WhatsApp"
-                        width="48"
-                    />
-                </a>
-            </section>
+        <footer className="footer-modern">
+            <div className="footer-container">
+                <div className="footer-column brand-column">
+                    <h3 className="footer-brand">Carnicería Madarey</h3>
+                    <p className="footer-tagline">Calidad Premium en cada corte.</p>
+                    <div className="footer-disclaimer">
+                        <p>
+                            <strong>Proyecto Educativo:</strong> Esta página es parte de un proyecto del curso de React JS del programa <strong>Talento Tech</strong>.
+                        </p>
+                        <p>
+                            La información aquí presentada es netamente ilustrativa. Esta página no tiene relación comercial con la Carnicería Madarey real, aunque se cuenta con autorización para el uso de su nombre. No se realizan operaciones reales ni se representan datos verídicos del negocio.
+                        </p>
+                    </div>
+                </div>
 
-            <section className="footer-info">
-                <p>Derechos reservados &copy; 2025</p>
-                <p className="footer-desarrollador">
-                    Desarrollado por: Revolución Tech ARG
-                    <img
-                        src={`${basePath}/argentina.png`}
-                        alt="Bandera de Argentina"
-                        width="20"
-                    />
+                <div className="footer-column links-column">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><Link to="/">Inicio</Link></li>
+                        <li><Link to="/Productos">Productos</Link></li>
+                        <li><Link to="/Ofertas">Ofertas</Link></li>
+                        <li><Link to="/Resenias">Reseñas</Link></li>
+                        <li><Link to="/Contacto">Contacto</Link></li>
+                    </ul>
+                </div>
+
+                <div className="footer-column contact-column">
+                    <h4>Contacto</h4>
+                    <p><i className="fas fa-map-marker-alt"></i> Rivadavia y Brandsen, San Fernando</p>
+                    <p><i className="fas fa-phone"></i> (011) 3832-8549</p>
+                    <p><i className="fas fa-envelope"></i> Giuli.madarey@gmail.com</p>
+
+                    <div className="social-links">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <i className="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                            <i className="fab fa-x-twitter"></i>
+                        </a>
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <i className="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                            <i className="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div className="footer-bottom">
+                <p>&copy; 2025 Carnicería Madarey. Todos los derechos reservados.</p>
+                <p className="developer-credit">
+                    Desarrollado por: <strong>Revolución Tech ARG</strong> 🇦🇷
                 </p>
-            </section>
+            </div>
         </footer>
     );
 };
