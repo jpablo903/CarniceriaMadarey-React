@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactDOM from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import logoImage from '../assets/logoCarniceriaMadarey.png';
 import { useAppContext } from "../context/AppContext";
@@ -25,9 +26,9 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
         }
     };
 
-    return (
-        <div className="login-modal-overlay">
-            <div className="login-form-container">
+    const modalContent = (
+        <div className="login-modal-overlay" onClick={onClose}>
+            <div className="login-form-container" onClick={(e) => e.stopPropagation()}>
                 <button className="close-btn" onClick={onClose}>&times;</button>
                 <h3>Iniciar Sesión</h3>
                 <form onSubmit={handleSubmit}>
@@ -44,6 +45,8 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
             </div>
         </div>
     );
+
+    return ReactDOM.createPortal(modalContent, document.body);
 };
 
 function NavBar() {
@@ -126,6 +129,27 @@ function NavBar() {
                         </li>
                         <li className="nav-item">
                             <Link to='/Contacto' onClick={toggleMenu} className={getLinkClass('/Contacto')}>Contacto</Link>
+                        </li>
+
+                        {/* Items exclusivos para móvil */}
+                        <li className="nav-item mobile-only">
+                            {isAuthenticated ? (
+                                <>
+                                    <span className="mobile-user-info">Hola, {usuario.nombre}</span>
+                                    {esAdmin && (
+                                        <Link to="/admin" className="mobile-btn-admin" onClick={toggleMenu}>
+                                            <i className="fas fa-cog"></i> Panel Admin
+                                        </Link>
+                                    )}
+                                    <button onClick={handleLogout} className="mobile-btn-logout">
+                                        <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
+                                    </button>
+                                </>
+                            ) : (
+                                <button onClick={handleLoginClick} className="mobile-btn-login">
+                                    <i className="fas fa-user"></i> Iniciar Sesión
+                                </button>
+                            )}
                         </li>
                     </ul>
                 </div>

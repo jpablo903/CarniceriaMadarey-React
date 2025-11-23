@@ -9,6 +9,7 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     position: relative;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 1000;
 }
 
 /* Fila 1: Logo + Nombre */
@@ -228,6 +229,7 @@
     z-index: 1000;
     transform-origin: top right;
     animation: dropdownFade 0.2s ease-out;
+    overflow: hidden;
 }
 
 @keyframes dropdownFade {
@@ -275,6 +277,7 @@
     transition: all 0.2s ease;
     border-radius: 8px;
     color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
 }
 
 .btn-logout-dropdown {
@@ -288,6 +291,7 @@
 
 .btn-admin-dashboard {
     color: #D4AF37;
+    width: 85%;
 }
 
 .btn-admin-dashboard:hover {
@@ -361,11 +365,27 @@
 }
 
 /* ================================================= */
+/* CLASES UTILITARIAS */
+/* ================================================= */
+.mobile-only {
+    display: none;
+}
+
+/* ================================================= */
 /* MEDIA QUERY: MÓVIL (860px) */
 /* ================================================= */
 @media (max-width: 860px) {
     .navbar-tech {
         padding: 10px 20px;
+    }
+
+    .nav-user-section {
+        display: none;
+    }
+
+    .mobile-only {
+        display: block;
+        width: 100%;
     }
 
     .navbar-logo-title {
@@ -422,39 +442,63 @@
     }
 
     .nav-item a {
-        font-size: 1.8rem !important;
+        font-size: 1.8rem;
         padding: 10px 20px !important;
         text-align: center;
         background: transparent !important;
         box-shadow: none !important;
     }
 
+    .nav-item a.mobile-btn-admin {
+        font-size: 1.2rem !important;
+        width: 90%;
+    }
+
     .nav-item a:hover {
         color: #D4AF37;
     }
 
-    .user-dropdown-menu {
-        position: fixed;
-        top: auto;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        border-radius: 20px 20px 0 0;
-        background: #1a1a1a;
-        padding: 20px;
-        border: none;
-        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
-        animation: slideUp 0.3s ease-out;
+    /* Estilos para items de usuario en móvil */
+    .mobile-user-info {
+        color: #D4AF37;
+        font-size: 1.2rem;
+        text-align: center;
+        padding: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 10px;
+        display: block;
     }
 
-    @keyframes slideUp {
-        from {
-            transform: translateY(100%);
-        }
+    .mobile-btn-logout,
+    .mobile-btn-login,
+    .mobile-btn-admin {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        font-family: inherit;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        text-decoration: none;
+    }
 
-        to {
-            transform: translateY(0);
-        }
+    .mobile-btn-logout {
+        color: #ff6b6b;
+        font-size: 1.3rem;
+    }
+
+    .mobile-btn-admin {
+        color: #D4AF37;
+    }
+
+    .mobile-btn-login:hover {
+        color: #ffffff;
     }
 }
