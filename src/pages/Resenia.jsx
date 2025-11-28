@@ -1,61 +1,118 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import '../css/resenias.css';
 import Swal from 'sweetalert2';
 
 const URL_RESENIAS_API = import.meta.env.VITE_API_URL_RESENIAS;
+const RESENAS_POR_PAGINA = 5;
 
 function Resenias() {
     const { isAuthenticated, usuario } = useAuthContext();
+
     const [resenias, setResenias] = useState([]);
+    const [cargandoDatos, setCargandoDatos] = useState(true);
+
     const [nuevoComentario, setNuevoComentario] = useState('');
     const [calificacion, setCalificacion] = useState(0);
     const [enviando, setEnviando] = useState(false);
     const [hoverRating, setHoverRating] = useState(0);
+
+    const [paginaActual, setPaginaActual] = useState(1);
 
     useEffect(() => {
         fetchResenias();
     }, []);
 
     const fetchResenias = async () => {
+        setCargandoDatos(true);
         try {
             const response = await fetch(URL_RESENIAS_API);
             if (response.ok) {
                 const data = await response.json();
-                setResenias(data.reverse());
+                setResenias(data);
             } else {
                 console.error('Error al cargar reseñas');
             }
         } catch (error) {
             console.error('Error de red:', error);
+        } finally {
+            setCargandoDatos(false);
         }
+    };
+
+    const { reseniasPaginadas, totalPaginas } = useMemo(() => {
+        const reseniasOrdenadas = [...resenias].sort((a, b) => {
+            const idA = a.id ? Number(a.id) : 0;
+            const idB = b.id ? Number(b.id) : 0;
+            return idB - idA;
+        });
+
+        const total = reseniasOrdenadas.length;
+        const totalPags = Math.ceil(total / RESENAS_POR_PAGINA);
+
+        let paginaCalculo = paginaActual;
+        if (paginaCalculo > totalPags && totalPags > 0) {
+            paginaCalculo = totalPags;
+        } else if (paginaCalculo < 1) {
+            paginaCalculo = 1;
+        }
+
+        const indiceInicio = (paginaCalculo - 1) * RESENAS_POR_PAGINA;
+        const indiceFin = paginaCalculo * RESENAS_POR_PAGINA;
+        const paginadas = reseniasOrdenadas.slice(indiceInicio, indiceFin);
+
+        return { reseniasPaginadas: paginadas, totalPaginas: totalPags };
+
+    }, [resenias, paginaActual]);
+
+    const irPaginaAnterior = () => {
+        if (paginaActual > 1) setPaginaActual(paginaActual - 1);
+    };
+
+    const irPaginaSiguiente = () => {
+        if (paginaActual < totalPaginas) setPaginaActual(paginaActual + 1);
+    };
+
+    const irAPagina = (numero) => {
+        if (numero >= 1 && numero <= totalPaginas) {
+            setPaginaActual(numero);
+        }
+    };
+
+    const obtenerNumerosPaginacion = () => {
+        const delta = 1;
+        const rango = [];
+        const rangoConPuntos = [];
+        let l;
+
+        for (let i = 1; i <= totalPaginas; i++) {
+            if (i === 1 || i === totalPaginas || (i >= paginaActual - delta && i <= paginaActual + delta)) {
+                rango.push(i);
+            }
+        }
+
+        for (let i of rango) {
+            if (l) {
+                if (i - l === 2) {
+                    rangoConPuntos.push(l + 1);
+                } else if (i - l !== 1) {
+                    rangoConPuntos.push('...');
+                }
+            }
+            rangoConPuntos.push(i);
+            l = i;
+        }
+
+        return rangoConPuntos;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!isAuthenticated) {
+        if (!isAuthenticated || calificacion === 0 || !nuevoComentario.trim()) {
             Swal.fire({
                 icon: 'warning',
-                title: 'Inicia sesión',
-                text: 'Debes iniciar sesión para dejar una reseña.',
-                confirmButtonColor: '#d33'
-            });
-            return;
-        }
-        if (calificacion === 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Falta calificación',
-                text: 'Por favor, selecciona una calificación.',
-                confirmButtonColor: '#d33'
-            });
-            return;
-        }
-        if (!nuevoComentario.trim()) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Comentario vacío',
-                text: 'Por favor, escribe un comentario.',
+                title: 'Validación incompleta',
+                text: 'Asegúrate de iniciar sesión, dar una calificación y escribir un comentario.',
                 confirmButtonColor: '#d33'
             });
             return;
@@ -72,17 +129,25 @@ function Resenias() {
         try {
             const response = await fetch(URL_RESENIAS_API, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(nuevaResenia)
             });
 
-            if (response.ok) {
+            if (response.ok || response.status === 201) {
                 const reseniaGuardada = await response.json();
-                setResenias([reseniaGuardada, ...resenias]);
+
+                const reseniaFinal = {
+                    ...nuevaResenia,
+                    ...reseniaGuardada,
+                    id: reseniaGuardada.id || Date.now()
+                };
+
+                setResenias(prevResenias => [reseniaFinal, ...prevResenias]);
+                setPaginaActual(1);
+
                 setNuevoComentario('');
                 setCalificacion(0);
+
                 Swal.fire({
                     icon: 'success',
                     title: '¡Gracias!',
@@ -91,21 +156,11 @@ function Resenias() {
                     timer: 2000
                 });
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Hubo un error al enviar tu reseña. Inténtalo de nuevo.',
-                    confirmButtonColor: '#d33'
-                });
+                Swal.fire({ icon: 'error', title: 'Error', text: 'Hubo un error al enviar tu reseña.', confirmButtonColor: '#d33' });
             }
         } catch (error) {
             console.error('Error al enviar reseña:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error de conexión',
-                text: 'No se pudo conectar con el servidor.',
-                confirmButtonColor: '#d33'
-            });
+            Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo conectar con el servidor.', confirmButtonColor: '#d33' });
         } finally {
             setEnviando(false);
         }
@@ -174,32 +229,89 @@ function Resenias() {
                     )}
                 </div>
 
-                <h3 className="recent-reviews-title">Reseñas recientes</h3>
+                <h3 className="recent-reviews-title">
+                    Reseñas recientes
+                </h3>
+
                 <div className="review-list">
-                    {resenias.length > 0 ? (
-                        resenias.map((resenia) => (
-                            <div key={resenia.id} className="review-card">
-                                <div className="review-header">
-                                    <div className="review-author-avatar">
-                                        {resenia.nombre.charAt(0).toUpperCase()}
+                    {cargandoDatos ? (
+                        <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
+                            <p>Cargando comentarios...</p>
+                        </div>
+                    ) : resenias.length > 0 ? (
+                        reseniasPaginadas.map((resenia, index) => {
+                            const posicionGlobal = (paginaActual - 1) * RESENAS_POR_PAGINA + index + 1;
+                            const uniqueKey = `p${paginaActual}-i${index}-id${resenia.id || 'none'}`;
+                            return (
+                                <div key={uniqueKey} className="review-card">
+                                    <div className="review-header">
+                                        <div className="review-author-avatar">
+                                            {resenia.nombre.charAt(0).toUpperCase()}
+                                        </div>
+                                        <div className="review-meta">
+                                            <h4 className="review-author">{resenia.nombre}</h4>
+                                            <span className="review-date">{resenia.fecha || 'Fecha no disponible'}</span>
+                                        </div>
+                                        <div className="review-rating-display">
+                                            {renderEstrellas(resenia.cantidadEstrella)}
+                                        </div>
                                     </div>
-                                    <div className="review-meta">
-                                        <h4 className="review-author">{resenia.nombre}</h4>
-                                        <span className="review-date">{resenia.fecha || 'Fecha no disponible'}</span>
-                                    </div>
-                                    <div className="review-rating-display">
-                                        {renderEstrellas(resenia.cantidadEstrella)}
+                                    <div className="review-body">
+                                        <p>{resenia.descripcion}</p>
                                     </div>
                                 </div>
-                                <div className="review-body">
-                                    <p>{resenia.descripcion}</p>
-                                </div>
-                            </div>
-                        ))
+                            );
+                        })
                     ) : (
                         <p className="no-reviews">Aún no hay reseñas. ¡Sé el primero en opinar!</p>
                     )}
                 </div>
+
+                {!cargandoDatos && totalPaginas > 1 && (
+                    <div className="pagination-controls">
+                        <button
+                            onClick={irPaginaAnterior}
+                            disabled={paginaActual === 1}
+                            className="pagination-btn"
+                        >
+                            Anterior
+                        </button>
+
+                        <div className="pagination-numbers" style={{ display: 'flex', gap: '5px' }}>
+                            {obtenerNumerosPaginacion().map((pagina, index) => (
+                                <React.Fragment key={index}>
+                                    {pagina === '...' ? (
+                                        <span className="pagination-ellipsis" style={{ padding: '0 5px' }}>...</span>
+                                    ) : (
+                                        <button
+                                            onClick={() => irAPagina(pagina)}
+                                            className={`pagination-number ${paginaActual === pagina ? 'active' : ''}`}
+                                        >
+                                            {pagina}
+                                        </button>
+                                    )}
+                                </React.Fragment>
+                            ))}
+                        </div>
+
+                        <button
+                            onClick={irPaginaSiguiente}
+                            disabled={paginaActual === totalPaginas}
+                            className="pagination-btn"
+                        >
+                            Siguiente
+                        </button>
+                    </div>
+                )}
+
+                {!cargandoDatos && totalPaginas > 1 && (
+                    <p className="pagination-info">
+                        Página {paginaActual} de {totalPaginas}
+                        {resenias.length > 0 && (
+                            <span> • Mostrando <strong>{reseniasPaginadas.length}</strong> de {resenias.length} reseñas</span>
+                        )}
+                    </p>
+                )}
             </section>
         </main>
     );
