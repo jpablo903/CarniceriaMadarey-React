@@ -33,7 +33,7 @@ const Footer = () => {
                 <div className="footer-column contact-column">
                     <h4>Contacto</h4>
                     <p><i className="fas fa-map-marker-alt"></i> Rivadavia y Brandsen, San Fernando</p>
-                    <p><i className="fas fa-phone"></i> (011) 3832-8549</p>
+                    <p><i className="fas fa-phone"></i> (011) 6821-3482</p>
                     <p><i className="fas fa-envelope"></i> Giuli.madarey@gmail.com</p>
 
                     <div className="social-links">

@@ -11,10 +11,13 @@
 
 .titulo-principal {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 30px;
     color: #D4AF37;
     font-weight: bold;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .secciones-container {
@@ -35,12 +38,15 @@
 
 .section-title {
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     margin-bottom: 20px;
     color: #D4AF37;
-    font-weight: bold;
-    border-bottom: 2px solid #D4AF37;
+    font-weight: 600;
+    border-bottom: 3px solid #D4AF37;
     padding-bottom: 10px;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
 .productos-grid-compact {

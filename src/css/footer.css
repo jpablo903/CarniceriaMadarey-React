@@ -7,7 +7,8 @@
     padding: 60px 0 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin-top: auto;
-    border-top: 4px solid #c0392b; /* Color rojo carne */
+    border-top: 4px solid #c0392b;
+    /* Color rojo carne */
 }
 
 .footer-container {
@@ -25,6 +26,7 @@
     margin-bottom: 20px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: 'Bebas Neue', cursive;
 }
 
 .footer-brand {
@@ -37,6 +39,7 @@
     font-style: italic;
     margin-bottom: 20px;
     color: #bdc3c7;
+    text-align: center;
 }
 
 .footer-disclaimer {
@@ -144,7 +147,7 @@
     .social-links {
         justify-content: center;
     }
-    
+
     .footer-disclaimer {
         text-align: left;
     }

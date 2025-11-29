@@ -53,8 +53,8 @@
 
 .brand-title {
     color: #f2f2f2;
-    font-family: 'NewNewsreade', serif;
-    font-size: 2rem;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2.2rem;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
@@ -66,8 +66,9 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    font-family: 'Birthstone', sans-serif;
-    font-size: 2.2rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.8rem;
+    padding: 0px 10px;
     font-weight: 900;
     font-style: italic;
     display: block;
@@ -397,11 +398,11 @@
     }
 
     .brand-title {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 
     .premium-text {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 
     .menu-toggle {

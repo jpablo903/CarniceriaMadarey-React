@@ -39,7 +39,7 @@ function Inicio() {
                 </p>
                 <p>
                     Estamos ubicados en calle Rivadavia y Brandsen, B1646 San Fernando, Provincia de Buenos Aires.
-                    Puedes contactarnos al teléfono (011) 3832-8549 o enviarnos un correo electrónico a
+                    Puedes contactarnos al teléfono (011) 6821-3482 o enviarnos un correo electrónico a
                     Giuli.madarey@gmail.com.
                 </p>
 
