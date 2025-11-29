@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/footer.css';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaInstagram, FaTwitter, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
 
 const Footer = () => {
     return (
@@ -32,22 +33,22 @@ const Footer = () => {
 
                 <div className="footer-column contact-column">
                     <h4>Contacto</h4>
-                    <p><i className="fas fa-map-marker-alt"></i> Rivadavia y Brandsen, San Fernando</p>
-                    <p><i className="fas fa-phone"></i> (011) 6821-3482</p>
-                    <p><i className="fas fa-envelope"></i> Giuli.madarey@gmail.com</p>
+                    <p><FaMapMarkerAlt /> Rivadavia y Brandsen, San Fernando</p>
+                    <p><FaPhone /> (011) 6821-3482</p>
+                    <p><FaEnvelope /> Giuli.madarey@gmail.com</p>
 
                     <div className="social-links">
                         <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                            <i className="fab fa-instagram"></i>
+                            <FaInstagram />
                         </a>
                         <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-                            <i className="fab fa-x-twitter"></i>
+                            <FaTwitter />
                         </a>
                         <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                            <i className="fab fa-facebook-f"></i>
+                            <FaFacebookF />
                         </a>
                         <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                            <i className="fab fa-whatsapp"></i>
+                            <FaWhatsapp />
                         </a>
                     </div>
                 </div>

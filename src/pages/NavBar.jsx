@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FaCog, FaSignOutAlt, FaUser, FaUserCircle } from 'react-icons/fa';
 import ReactDOM from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import logoImage from '../assets/logoCarniceriaMadarey.png';
@@ -6,7 +6,8 @@ import { useAppContext } from "../context/AppContext";
 import { useAuthContext } from "../context/AuthContext";
 import '../css/navbar.css';
 import '../css/login-modal.css';
-import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 const LoginForm = ({ onLoginSuccess, onClose }) => {
     const [nombre, setNombre] = useState('');
@@ -17,12 +18,7 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
         if (nombre && email) {
             onLoginSuccess(nombre, email);
         } else {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campos incompletos',
-                text: 'Por favor, ingresa tu nombre y correo.',
-                confirmButtonColor: '#d33'
-            });
+            toast.warning('Por favor, ingresa tu nombre y correo.');
         }
     };
 
@@ -84,12 +80,7 @@ function NavBar() {
     const handleLoginSuccess = (nombre, email) => {
         iniciarSesion(nombre, email);
         setMostrarLogin(false);
-        Swal.fire({
-            icon: 'success',
-            title: `¡Bienvenido ${nombre}!`,
-            showConfirmButton: false,
-            timer: 1500
-        });
+        // El toast de bienvenida lo maneja AuthContext
     };
 
     return (
@@ -138,16 +129,16 @@ function NavBar() {
                                     <span className="mobile-user-info">Hola, {usuario.nombre}</span>
                                     {esAdmin && (
                                         <Link to="/admin" className="mobile-btn-admin" onClick={toggleMenu}>
-                                            <i className="fas fa-cog"></i> Panel Admin
+                                            <FaCog /> Panel Admin
                                         </Link>
                                     )}
                                     <button onClick={handleLogout} className="mobile-btn-logout">
-                                        <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
+                                        <FaSignOutAlt /> Cerrar Sesión
                                     </button>
                                 </>
                             ) : (
                                 <button onClick={handleLoginClick} className="mobile-btn-login">
-                                    <i className="fas fa-user"></i> Iniciar Sesión
+                                    <FaUser /> Iniciar Sesión
                                 </button>
                             )}
                         </li>
@@ -174,7 +165,7 @@ function NavBar() {
                                     onClick={toggleUserMenu}
                                     title="Menú de usuario"
                                 >
-                                    <i className="fas fa-user-circle"></i>
+                                    <FaUserCircle />
                                 </button>
 
                                 {userMenuOpen && (
@@ -182,7 +173,7 @@ function NavBar() {
                                         {esAdmin && (
                                             <div className="user-dropdown-item">
                                                 <Link to="/admin" className="btn-admin-dashboard" onClick={() => setUserMenuOpen(false)}>
-                                                    <i className="fas fa-cog"></i>
+                                                    <FaCog />
                                                     Panel Admin
                                                 </Link>
                                             </div>
@@ -192,7 +183,7 @@ function NavBar() {
                                         </div>
                                         <div className="user-dropdown-item">
                                             <button onClick={handleLogout} className="btn-logout-dropdown">
-                                                <i className="fas fa-sign-out-alt"></i>
+                                                <FaSignOutAlt />
                                                 Cerrar Sesión
                                             </button>
                                         </div>
@@ -201,7 +192,7 @@ function NavBar() {
                             </div>
                         ) : (
                             <button onClick={handleLoginClick} className="btn-login-icon" title="Iniciar sesión">
-                                <i className="fas fa-user"></i>
+                                <FaUser />
                             </button>
                         )}
                     </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaImage, FaCartPlus, FaEdit } from 'react-icons/fa';
 
 const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProducto }) => {
     const formatPrecio = (precio, unidad) => {
@@ -33,12 +34,12 @@ const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProduct
                                         }}
                                     />
                                     <div className="producto-sin-imagen-compact" style={{ display: 'none' }}>
-                                        <i className="fas fa-image"></i>
+                                        <FaImage />
                                     </div>
                                 </>
                             ) : (
                                 <div className="producto-sin-imagen-compact">
-                                    <i className="fas fa-image"></i>
+                                    <FaImage />
                                 </div>
                             )}
                         </div>
@@ -57,7 +58,7 @@ const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProduct
                                     onClick={() => handleAddToCart(item)}
                                     title="Agregar al carrito"
                                 >
-                                    <i className="fas fa-cart-plus"></i>
+                                    <FaCartPlus />
                                     Agregar
                                 </button>
                             ) : (
@@ -66,7 +67,7 @@ const ProductoCard = ({ titulo, items, handleAddToCart, esAdmin, onEditarProduct
                                     onClick={() => onEditarProducto(item)}
                                     title="Editar producto"
                                 >
-                                    <i className="fas fa-edit"></i>
+                                    <FaEdit />
                                     Editar
                                 </button>
                             )}

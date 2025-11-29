@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../css/productos.css';
-import NotificacionCarrito from './NotificacionCarrito';
 import { useAppContext } from '../context/AppContext';
 import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -14,16 +13,10 @@ function Ofertas() {
     const [ofertas, setOfertas] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
-    const [notificacionMensaje, setNotificacionMensaje] = useState(null);
-    const DURACION_NOTIFICACION = 2500;
     const navigate = useNavigate();
 
     const handleAddToCart = (item) => {
         agregarAlCarrito(item);
-        setNotificacionMensaje(`${item.nombre} agregado al carrito! ✅`);
-        setTimeout(() => {
-            setNotificacionMensaje(null);
-        }, DURACION_NOTIFICACION);
     };
 
     const handleEditarProducto = (producto) => {
@@ -91,8 +84,6 @@ function Ofertas() {
                     </div>
                 )}
             </div>
-
-            <NotificacionCarrito mensaje={notificacionMensaje} />
         </main>
     );
 }

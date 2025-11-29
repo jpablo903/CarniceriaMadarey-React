@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import '../css/adminpanel.css';
 import { useProductContext } from '../context/ProductContext';
 import { useAuthContext } from '../context/AuthContext';
+import ConfirmModal from '../components/ConfirmModal';
+import { FaSearch, FaTimes, FaPlus, FaImage, FaEdit, FaTrash } from 'react-icons/fa';
 
 const URL_PRODUCTOS_API = import.meta.env.VITE_API_URL;
 
@@ -14,6 +16,8 @@ function AdminPanel() {
     const [filtroCategoria, setFiltroCategoria] = useState('todos');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [productoEditando, setProductoEditando] = useState(null);
+    const [mostrarModalConfirm, setMostrarModalConfirm] = useState(false);
+    const [productoAEliminar, setProductoAEliminar] = useState(null);
     const [formData, setFormData] = useState({
         nombre: '',
         precio: 0,
@@ -104,10 +108,17 @@ function AdminPanel() {
         setMostrarFormulario(true);
     };
 
-    const handleEliminar = async (id) => {
-        if (window.confirm('¿Estás seguro de eliminar este producto?')) {
-            await eliminarProducto(id);
+    const handleEliminar = (producto) => {
+        setProductoAEliminar(producto);
+        setMostrarModalConfirm(true);
+    };
+
+    const confirmarEliminar = async () => {
+        if (productoAEliminar) {
+            await eliminarProducto(productoAEliminar.id);
             await cargarProductos();
+            setProductoAEliminar(null);
+            setMostrarModalConfirm(false);
         }
     };
 
@@ -165,7 +176,7 @@ function AdminPanel() {
                 <div className="filters-container">
                     <div className="search-container">
                         <div className="search-input-wrapper">
-                            <i className="fas fa-search search-icon"></i>
+                            <FaSearch className="search-icon" />
                             <input
                                 type="text"
                                 placeholder="Buscar productos por nombre..."
@@ -179,7 +190,7 @@ function AdminPanel() {
                                     className="clear-search-btn"
                                     title="Limpiar búsqueda"
                                 >
-                                    <i className="fas fa-times"></i>
+                                    <FaTimes />
                                 </button>
                             )}
                         </div>
@@ -205,7 +216,7 @@ function AdminPanel() {
                             className="clear-filters-btn"
                             title="Limpiar todos los filtros"
                         >
-                            <i className="fas fa-times"></i>
+                            <FaTimes />
                             Limpiar Filtros
                         </button>
                     )}
@@ -221,7 +232,7 @@ function AdminPanel() {
                         className="btn-agregar-producto"
                         onClick={() => setMostrarFormulario(true)}
                     >
-                        <i className="fas fa-plus"></i>
+                        <FaPlus />
                         Agregar Producto
                     </button>
                 </div>
@@ -342,7 +353,7 @@ function AdminPanel() {
                                     />
                                 ) : null}
                                 <div className="no-image" style={{ display: producto.imagen ? 'none' : 'block' }}>
-                                    <i className="fas fa-image"></i>
+                                    <FaImage />
                                     <span>Sin imagen</span>
                                 </div>
                             </div>
@@ -359,20 +370,20 @@ function AdminPanel() {
                                     className="btn-editar"
                                     onClick={() => handleEditar(producto)}
                                 >
-                                    <i className="fas fa-edit"></i>
+                                    <FaEdit />
                                 </button>
                                 <button
                                     className="btn-eliminar-admin"
-                                    onClick={() => handleEliminar(producto.id)}
+                                    onClick={() => handleEliminar(producto)}
                                 >
-                                    <i className="fas fa-trash"></i>
+                                    <FaTrash />
                                 </button>
                             </div>
                         </div>
                     ))
                 ) : (
                     <div className="no-results">
-                        <i className="fas fa-search"></i>
+                        <FaSearch />
                         <p>No se encontraron productos</p>
                         <p>Intenta con otros términos de búsqueda</p>
                         {(busqueda || filtroCategoria !== 'todos') && (
@@ -386,6 +397,20 @@ function AdminPanel() {
                     </div>
                 )}
             </div>
+
+            <ConfirmModal
+                isOpen={mostrarModalConfirm}
+                onClose={() => {
+                    setMostrarModalConfirm(false);
+                    setProductoAEliminar(null);
+                }}
+                onConfirm={confirmarEliminar}
+                title="¿Eliminar producto?"
+                message={productoAEliminar ? `¿Estás seguro de que deseas eliminar "${productoAEliminar.nombre}"? Esta acción no se puede deshacer.` : "Esta acción no se puede deshacer."}
+                confirmText="Sí, eliminar"
+                cancelText="Cancelar"
+                type="danger"
+            />
         </main>
     );
 }

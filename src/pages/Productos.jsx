@@ -4,7 +4,8 @@ import { useAppContext } from '../context/AppContext';
 import { useAuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import ProductoCard from '../components/ProductoCard';
-import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import { FaSearch, FaTimes } from 'react-icons/fa';
 
 const URL_PRODUCTOS_API = import.meta.env.VITE_API_URL;
 
@@ -35,18 +36,6 @@ function Productos() {
 
     const handleAddToCart = (item) => {
         agregarAlCarrito(item);
-        Swal.fire({
-            icon: 'success',
-            title: 'Agregado',
-            text: `${item.nombre} se agregó al carrito`,
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            background: '#fff',
-            color: '#333'
-        });
     };
 
     const handleEditarProducto = (producto) => {
@@ -162,7 +151,7 @@ function Productos() {
                 <div className="productos-filters-container">
                     <div className="productos-search-container">
                         <div className="productos-search-input-wrapper">
-                            <i className="fas fa-search productos-search-icon"></i>
+                            <FaSearch className="productos-search-icon" />
                             <input
                                 type="text"
                                 placeholder="Buscar productos por nombre..."
@@ -176,7 +165,7 @@ function Productos() {
                                     className="productos-clear-search-btn"
                                     title="Limpiar búsqueda"
                                 >
-                                    <i className="fas fa-times"></i>
+                                    <FaTimes />
                                 </button>
                             )}
                         </div>
@@ -202,7 +191,7 @@ function Productos() {
                             className="productos-clear-filters-btn"
                             title="Limpiar todos los filtros"
                         >
-                            <i className="fas fa-times"></i>
+                            <FaTimes />
                             Limpiar Filtros
                         </button>
                     )}
@@ -231,7 +220,7 @@ function Productos() {
                 </div>
             ) : (
                 <div className="productos-no-results">
-                    <i className="fas fa-search"></i>
+                    <FaSearch />
                     <p>No se encontraron productos</p>
                     <p>Intenta con otros términos de búsqueda</p>
                     {(busqueda || filtroCategoria !== 'todos') && (

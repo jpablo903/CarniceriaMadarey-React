@@ -3,7 +3,8 @@ import '../css/carrito.css';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { useAuthContext } from '../context/AuthContext';
-import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import { FaShoppingBasket, FaTrashAlt } from 'react-icons/fa';
 
 const LoginForm = ({ onLoginSuccess, onClose }) => {
     const [nombre, setNombre] = useState('');
@@ -14,12 +15,7 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
         if (nombre && email) {
             onLoginSuccess(nombre, email);
         } else {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campos incompletos',
-                text: 'Por favor, ingresa tu nombre y correo.',
-                confirmButtonColor: '#d33'
-            });
+            toast.warning('Por favor, ingresa tu nombre y correo.');
         }
     };
 
@@ -60,26 +56,15 @@ function Carrito() {
         if (!isAuthenticated) {
             setMostrarLogin(true);
         } else {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Compra finalizada!',
-                text: `Gracias por tu compra, ${usuario.nombre}.`,
-                confirmButtonColor: '#D4AF37'
-            });
-            vaciarCarrito();
+            toast.success(`¡Compra finalizada! Gracias por tu compra, ${usuario.nombre}.`);
+            vaciarCarrito(false);
         }
     };
 
     const handleLoginSuccess = (nombre, email) => {
         iniciarSesion(nombre, email);
         setMostrarLogin(false);
-        Swal.fire({
-            icon: 'success',
-            title: `¡Bienvenido ${nombre}!`,
-            text: 'Ahora puedes completar tu pedido.',
-            showConfirmButton: false,
-            timer: 2000
-        });
+        // El toast de bienvenida lo maneja AuthContext
     };
 
     if (!carrito || carrito.length === 0) {
@@ -87,7 +72,7 @@ function Carrito() {
             <main className="carrito-page">
                 <h3 className="titulo-carrito">Tu Carrito de Compras</h3>
                 <div className="carrito-vacio">
-                    <i className="fas fa-shopping-basket" style={{ fontSize: '4rem', color: '#D4AF37', marginBottom: '20px' }}></i>
+                    <FaShoppingBasket style={{ fontSize: '4rem', color: '#D4AF37', marginBottom: '20px' }} />
                     <p>Tu carrito está vacío. ¡Explora nuestros productos y agrega algo delicioso!</p>
                     <Link to="/productos" className="btn-finalizar-compra" style={{ maxWidth: '300px', display: 'block', margin: '20px auto' }}>
                         Ir a Productos
@@ -127,11 +112,11 @@ function Carrito() {
                     <div id="carrito-lista">
                         {carrito.map(item => (
                             <div key={item.id} className="carrito-item">
-                                <span className="carrito-col producto-col">{item.nombre}</span>
+                                <span className="carrito-col producto-col" data-label="Producto">{item.nombre}</span>
 
-                                <span className="carrito-col precio-col">{formatCurrency(item.precio)}</span>
+                                <span className="carrito-col precio-col" data-label="Precio/Kg">{formatCurrency(item.precio)}</span>
 
-                                <span className="carrito-col cantidad-col">
+                                <span className="carrito-col cantidad-col" data-label="Cantidad">
                                     <div className="cantidad-controles">
                                         <button
                                             className="btn-cantidad"
@@ -149,17 +134,17 @@ function Carrito() {
                                     </div>
                                 </span>
 
-                                <span className="carrito-col subtotal-col">
+                                <span className="carrito-col subtotal-col" data-label="Total Ítem">
                                     {formatCurrency(item.precio * item.cantidad)}
                                 </span>
 
-                                <span className="carrito-col acciones-col">
+                                <span className="carrito-col acciones-col" data-label="">
                                     <button
                                         className="btn-eliminar"
                                         title="Eliminar ítem"
                                         onClick={() => eliminarDelCarrito(item.id)}
                                     >
-                                        <i className="fas fa-trash-alt"></i>
+                                        <FaTrashAlt />
                                     </button>
                                 </span>
                             </div>

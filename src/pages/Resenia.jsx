@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import '../css/resenias.css';
-import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import { FaUserLock } from 'react-icons/fa';
 
 const URL_RESENIAS_API = import.meta.env.VITE_API_URL_RESENIAS;
 const RESENAS_POR_PAGINA = 5;
@@ -31,10 +32,14 @@ function Resenias() {
                 const data = await response.json();
                 setResenias(data);
             } else {
-                console.error('Error al cargar reseñas');
+                toast.error('Error al cargar las reseñas', {
+                    position: "bottom-right"
+                });
             }
         } catch (error) {
-            console.error('Error de red:', error);
+            toast.error('No se pudo conectar con el servidor', {
+                position: "bottom-right"
+            });
         } finally {
             setCargandoDatos(false);
         }
@@ -109,11 +114,9 @@ function Resenias() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isAuthenticated || calificacion === 0 || !nuevoComentario.trim()) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Validación incompleta',
-                text: 'Asegúrate de iniciar sesión, dar una calificación y escribir un comentario.',
-                confirmButtonColor: '#d33'
+            toast.warning('⚠️ Por favor, inicia sesión, da una calificación y escribe un comentario', {
+                position: "bottom-right",
+                autoClose: 4000
             });
             return;
         }
@@ -148,19 +151,16 @@ function Resenias() {
                 setNuevoComentario('');
                 setCalificacion(0);
 
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Gracias!',
-                    text: 'Tu reseña ha sido publicada.',
-                    showConfirmButton: false,
-                    timer: 2000
+                toast.success('⭐ ¡Gracias por tu reseña!', {
+                    position: "bottom-right",
+                    autoClose: 3000
                 });
             } else {
-                Swal.fire({ icon: 'error', title: 'Error', text: 'Hubo un error al enviar tu reseña.', confirmButtonColor: '#d33' });
+                toast.error('❌ Hubo un error al enviar tu reseña', { position: "bottom-right" });
             }
         } catch (error) {
             console.error('Error al enviar reseña:', error);
-            Swal.fire({ icon: 'error', title: 'Error de conexión', text: 'No se pudo conectar con el servidor.', confirmButtonColor: '#d33' });
+            toast.error('❌ No se pudo conectar con el servidor', { position: "bottom-right" });
         } finally {
             setEnviando(false);
         }
@@ -222,7 +222,7 @@ function Resenias() {
                         </>
                     ) : (
                         <div className="login-prompt-review">
-                            <i className="fas fa-user-lock"></i>
+                            <FaUserLock />
                             <h3>Inicia sesión para dejar tu opinión</h3>
                             <p>Queremos saber qué piensas. Por favor, ingresa a tu cuenta para compartir tu experiencia.</p>
                         </div>

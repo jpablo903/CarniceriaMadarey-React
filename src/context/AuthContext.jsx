@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -39,15 +40,26 @@ export function AuthProvider({ children }) {
         setUsuario({ nombre, email });
         setIsAuthenticated(true);
         console.log('Usuario logueado:', { nombre, email });
+
+        toast.success(`👋 ¡Bienvenido, ${nombre}!`, {
+            position: "bottom-right",
+            autoClose: 3000,
+            icon: "✨"
+        });
     };
 
     const cerrarSesion = () => {
+        const nombreUsuario = usuario.nombre;
         setIsAuthenticated(false);
         setUsuario({ nombre: "", email: "" });
         // Limpiar localStorage al cerrar sesión
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('usuario');
 
+        toast.info(`👋 Hasta pronto, ${nombreUsuario}!`, {
+            position: "bottom-right",
+            autoClose: 2500
+        });
     };
 
     const value = {
