@@ -1,18 +1,26 @@
 import React from "react";
 import '../css/inicio.css';
 import MapaDiferido from "../components/MapaDiferido";
+import posterImage from '../assets/poster-video.webp';
 
 function Inicio() {
 
     const videoSrc = "/videos/carnicería premium Madarey.mp4";
     const subtitlesSrc = "/videos/subtitulosvideo.vtt";
-    const posterSrc = "/assets/posterSrc.webp";
+    const posterSrc = posterImage;
 
     return (
         <main className="inicio-page">
             <section>
                 <div className="video-responsive">
-                    <video controls autoPlay muted poster={posterSrc} >
+                    <video 
+                        controls
+                        muted 
+                        playsInline 
+                        preload="none" 
+                        poster={posterSrc}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} >
+
                         <source src={videoSrc} type="video/mp4" />
                         Tu navegador no soporta la reproducción de video.
                         <track
