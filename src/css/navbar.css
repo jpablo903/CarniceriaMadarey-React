@@ -651,7 +651,7 @@
 
     .nav-item a.mobile-btn-admin {
         font-size: 1.2rem !important;
-        width: 90%;
+        width: 100%;
     }
 
     .nav-item a:hover {

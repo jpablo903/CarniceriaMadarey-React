@@ -305,16 +305,16 @@
 }
 
 @media (max-width: 600px) {
-
-    .resenias-page{
-        width: 0%;
+    .resenias-page {
+        width: auto;
     }
+
+    .review-section {
+        padding: 15px;
+    }
+
     .review-header {
         flex-wrap: wrap;
-    }
-
-    .review-section{
-        padding: 15px;
     }
 
     .review-rating-display {
