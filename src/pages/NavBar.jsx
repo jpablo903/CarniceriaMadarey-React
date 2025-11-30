@@ -1,7 +1,7 @@
 import { FaCog, FaSignOutAlt, FaUser, FaUserCircle } from 'react-icons/fa';
 import ReactDOM from "react-dom";
 import { Link, useLocation } from "react-router-dom";
-import logoImage from '../assets/logoCarniceriaMadarey.png';
+import logoImage from '../assets/logoCarniceriaMadarey.webp';
 import { useAppContext } from "../context/AppContext";
 import { useAuthContext } from "../context/AuthContext";
 import '../css/navbar.css';
@@ -88,7 +88,7 @@ function NavBar() {
             <div className="navbar-top-row">
                 <div className="navbar-logo-title">
                     <Link to='/' className="logo-link">
-                        <img src={logoImage} alt="Logo de Carniceria Madarey" className="logo-img" />
+                        <img src={logoImage} alt="Logo de Carniceria Madarey" className="logo-img" width="140" height="141" />
                     </Link>
                     <div className="navbar-brand">
                         <span className="brand-title">Carniceria Madarey</span>
